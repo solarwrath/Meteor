@@ -38,7 +38,7 @@ public class LoginController {
         assert createAccountButton != null : "fx:id=\"createAccountButton\" was not injected: check your FXML file 'login.fxml'.";
         assert loginField != null : "fx:id=\"loginField\" was not injected: check your FXML file 'login.fxml'.";
         assert passwordField != null : "fx:id=\"passwordField\" was not injected: check your FXML file 'login.fxml'.";
-
+        passwor
         signInButton.setOnAction(event -> {
             System.out.println("u pressed login button");
         });
