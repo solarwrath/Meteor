@@ -1,4 +1,4 @@
-package sample.core;
+package Meteor.core;
 
 import java.util.Date;
 

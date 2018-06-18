@@ -1,4 +1,4 @@
-package sample.controls;
+package Meteor.controls;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.ObjectProperty;

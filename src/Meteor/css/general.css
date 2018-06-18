@@ -13,7 +13,7 @@
 
 
 
-.text-field{
+.password-field{
     -fx-text-fill: #f34278;
     -fx-fill: #f34278;
     -fx-prompt-text-fill: #f34278;
@@ -108,5 +108,55 @@
     .text-field--magenta{
         -fx-background-color: #B60C73;
         -fx-border-color: #CC549D;
+    }
 
+.text-field{
+    -fx-pref-width: 256px;
+    -fx-pref-height: 36px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-border-width: 1px;
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-size: 10px;
+    -fx-text-fill: #f3f3f3;
+    -jfx-unfocus-color: transparent;
+    -jfx-focus-color: transparent;
+}
+
+/*
+            PASSWORD FIELD
+ */
+
+.password-field-label{
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-size: 16px;
+    -fx-text-fill: #f3f3f3;
+}
+.password-field{
+    -fx-pref-width: 256px;
+    -fx-pref-height: 36px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-border-width: 1px;
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-size: 10px;
+    -fx-text-fill: #f3f3f3;
+    -jfx-unfocus-color: transparent;
+    -jfx-focus-color: transparent;
+}
+    .password-field--blue{
+        -fx-background-color: #328EFC;
+        -fx-border-color: #6FB0FD;
+    }
+    .password-field--bright-violet{
+        -fx-background-color: #9944FF;
+        -fx-border-color: #B77CFF;
+    }
+    .password-field--dark-violet{
+        -fx-background-color: #1B1050;
+        -fx-border-color: #5F5784;
+    }
+    .password-field--magenta{
+        -fx-background-color: #B60C73;
+        -fx-border-color: #CC549D;
     }

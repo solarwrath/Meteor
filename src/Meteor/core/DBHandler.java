@@ -1,8 +1,7 @@
-package sample.core;
+package Meteor.core;
 
+import java.lang.reflect.Array;
 import java.sql.*;
-
-import sample.core.User;
 
 public class DBHandler {
     // JDBC URL, username and password of MySQL server

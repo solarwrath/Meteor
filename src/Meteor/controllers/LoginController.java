@@ -1,26 +1,22 @@
-package sample.controllers;
+package Meteor.controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
-import sample.core.DBHandler;
-import sample.core.User;
+import Meteor.core.DBHandler;
+import Meteor.core.User;
 
 public class LoginController {
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private JFXTextField loginField;
 
     @FXML
-    private JFXTextField passwordField;
+    private JFXPasswordField passwordField;
 
     @FXML
     private JFXButton signInButton;
@@ -38,7 +34,7 @@ public class LoginController {
         assert createAccountButton != null : "fx:id=\"createAccountButton\" was not injected: check your FXML file 'login.fxml'.";
         assert loginField != null : "fx:id=\"loginField\" was not injected: check your FXML file 'login.fxml'.";
         assert passwordField != null : "fx:id=\"passwordField\" was not injected: check your FXML file 'login.fxml'.";
-        passwor
+        //TODO create passwordfields and implement it int his form
         signInButton.setOnAction(event -> {
             System.out.println("u pressed login button");
         });
@@ -48,8 +44,6 @@ public class LoginController {
 
             //#TODO collect infro from textfields and radio box and then pass it to the method below
 
-
-            //#TODO Connect to GitHub and integrate it into the IDEA
 
             dbHandler.addUser(new User("username" , "password", "first", "last", "gender"));
         });
