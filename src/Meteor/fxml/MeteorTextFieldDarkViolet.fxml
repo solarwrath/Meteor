@@ -12,6 +12,6 @@
             <Insets left="8.0" />
          </padding>
       </JFXTextField>
-      <Label styleClass="text-field-label" text="Label" />
+      <Label styleClass="text-field--label" text="Label" />
    </children>
 </AnchorPane>

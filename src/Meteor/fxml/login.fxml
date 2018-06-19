@@ -61,12 +61,12 @@
                         <Insets left="8.0" />
                      </padding>
                   </JFXTextField>
-                  <Label styleClass="text-field-label" text="Login" />
+                  <Label styleClass="text-field--label" text="Login" />
                </children>
             </AnchorPane>
             <AnchorPane layoutX="435.0" layoutY="413.0" minHeight="60.0" minWidth="256.0" prefHeight="60.0" prefWidth="256.0">
                <children>
-                  <Label styleClass="password-field-label" text="Password" />
+                  <Label styleClass="password-field--label" text="Password" />
                   <JFXPasswordField fx:id="passwordField" layoutY="22.0" prefHeight="36.0" prefWidth="256.0" styleClass="password-field--magenta">
                      <padding>
                         <Insets left="8.0" />
