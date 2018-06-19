@@ -8,19 +8,26 @@ import javafx.stage.*;
 
 public class Main extends Application {
 
+    public static Scene loginScene;
+    public static Scene registrationScene;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("fxml/login.fxml"));
         Font.loadFont(Main.class.getResource("assets/fonts/Montserrat-SemiBold.otf").toExternalForm(), 12);
         /*Font.loadFont(Main.class.getResource("assets/fonts/Montserrat-Bold.otf").toExternalForm(), 12);
         Font.loadFont(Main.class.getResource("assets/fonts/Montserrat-Light.otf").toExternalForm(), 12);*/
         primaryStage.setTitle("Meteor");
         primaryStage.initStyle(StageStyle.UNDECORATED);
 
-        root.getAccessibleHelp();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().addAll(this.getClass().getResource("css/login.css").toExternalForm(), this.getClass().getResource("css/general.css").toExternalForm());
-        primaryStage.setScene(scene);
+        loginScene = new Scene(FXMLLoader.load(getClass().getResource("fxml/login.fxml")));
+        loginScene.getRoot().getAccessibleHelp();
+        loginScene.getStylesheets().addAll(this.getClass().getResource("css/login.css").toExternalForm(), this.getClass().getResource("css/general.css").toExternalForm());
+
+        registrationScene = new Scene(FXMLLoader.load(getClass().getResource("fxml/registrationScreen.fxml")));
+        registrationScene.getRoot().getAccessibleHelp();
+        registrationScene.getStylesheets().addAll(this.getClass().getResource("css/login.css").toExternalForm(), this.getClass().getResource("css/general.css").toExternalForm());
+
+        primaryStage.setScene(loginScene);
         primaryStage.show();
     }
 

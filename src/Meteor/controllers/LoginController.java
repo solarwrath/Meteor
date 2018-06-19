@@ -15,6 +15,7 @@ import Meteor.core.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class LoginController {
@@ -34,6 +35,9 @@ public class LoginController {
     @FXML
     private JFXButton forgotPasswordButton;
 
+    @FXML
+    private AnchorPane loginScreenParent;
+
 
     @FXML
     void initialize() {
@@ -45,16 +49,11 @@ public class LoginController {
             System.out.println("u pressed login button");
         });*/
         createAccountButton.setOnAction(event -> {
-            System.out.println("u pressed reg button");
-            try {
-                Scene registrationScreen = new Scene(FXMLLoader.load(getClass().getResource("../fxml/registrationScreen.fxml")));
-                Stage currentStage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-                currentStage.setScene(registrationScreen);
-            }
-            catch (IOException | NullPointerException exception){
-                System.out.println("Got " + exception.getMessage());
-                exception.printStackTrace();
-            }
+
+            Stage currentStage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            currentStage.setScene(Main.registrationScene);
+            loginScreenParent.requestFocus();
+
             //DBHandler dbHandler = new DBHandler();
 
             //#TODO collect infro from textfields and radio box and then pass it to the method below
