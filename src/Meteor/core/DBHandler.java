@@ -18,8 +18,8 @@ public class DBHandler {
     public void addUser(User givenUser){
         String givenUsername = givenUser.getUsername();
         String givenPassword = givenUser.getPassword();
-        String givenFirstName = givenUser.getFirstName();
-        String givenLastName = givenUser.getLastName();
+        String givenEmail = givenUser.getEmail();
+        String givenFullName = givenUser.getFullName();
         String givenGender = givenUser.getGender();
         Date currentDate = new Date(new java.util.Date().getTime());
         try {
@@ -27,13 +27,13 @@ public class DBHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        String sqlToExecute = "INSERT INTO students (username, password, first_name, last_name, gender, date_added)\n" +
+        String sqlToExecute = "INSERT INTO students (username, password, email, full_name, gender, date_added)\n" +
                 "VALUES (?, ?, ?, ?, ?, ?); ";
         try (PreparedStatement preparedStatement = con.prepareStatement(sqlToExecute)) {
             preparedStatement.setString(1, givenUsername);
             preparedStatement.setString(2, givenPassword);
-            preparedStatement.setString(3, givenFirstName);
-            preparedStatement.setString(4, givenLastName);
+            preparedStatement.setString(3, givenEmail);
+            preparedStatement.setString(4, givenFullName);
             preparedStatement.setString(5, givenGender);
             preparedStatement.setDate(6, currentDate);
             preparedStatement.executeUpdate();

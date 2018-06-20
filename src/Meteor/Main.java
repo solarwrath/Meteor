@@ -10,6 +10,7 @@ public class Main extends Application {
 
     public static Scene loginScene;
     public static Scene registrationScene;
+    public static Scene postRegistrationScene;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -19,13 +20,17 @@ public class Main extends Application {
         primaryStage.setTitle("Meteor");
         primaryStage.initStyle(StageStyle.UNDECORATED);
 
-        loginScene = new Scene(FXMLLoader.load(getClass().getResource("fxml/login.fxml")));
+        loginScene = new Scene(FXMLLoader.load(getClass().getResource("fxml/loginScreen.fxml")));
         loginScene.getRoot().getAccessibleHelp();
-        loginScene.getStylesheets().addAll(this.getClass().getResource("css/login.css").toExternalForm(), this.getClass().getResource("css/general.css").toExternalForm());
+        loginScene.getStylesheets().add( this.getClass().getResource("css/general.css").toExternalForm());
 
         registrationScene = new Scene(FXMLLoader.load(getClass().getResource("fxml/registrationScreen.fxml")));
         registrationScene.getRoot().getAccessibleHelp();
-        registrationScene.getStylesheets().addAll(this.getClass().getResource("css/login.css").toExternalForm(), this.getClass().getResource("css/general.css").toExternalForm());
+        registrationScene.getStylesheets().add(this.getClass().getResource("css/general.css").toExternalForm());
+
+        postRegistrationScene = new Scene(FXMLLoader.load(getClass().getResource("fxml/postRegistrationScreen.fxml")));
+        postRegistrationScene.getRoot().getAccessibleHelp();
+        postRegistrationScene.getStylesheets().add(this.getClass().getResource("css/general.css").toExternalForm());
 
         primaryStage.setScene(loginScene);
         primaryStage.show();

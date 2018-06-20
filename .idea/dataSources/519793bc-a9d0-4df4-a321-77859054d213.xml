@@ -28,12 +28,12 @@
       <DataType>varchar(30)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="12" parent="8" name="first_name">
+    <column id="12" parent="8" name="email">
       <Position>4</Position>
-      <DataType>varchar(20)|0</DataType>
+      <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="13" parent="8" name="last_name">
+    <column id="13" parent="8" name="full_name">
       <Position>5</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>

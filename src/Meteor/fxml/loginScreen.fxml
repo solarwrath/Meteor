@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="center" hgap="10" stylesheets="@../css/general.css" vgap="10" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Meteor.controllers.LoginController">
+<GridPane alignment="center" hgap="10" stylesheets="@../css/general.css" vgap="10" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Meteor.controllers.LoginScreenController">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
@@ -22,7 +22,7 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <AnchorPane fx:id="loginScreenParent" id="loginFormBackground" prefHeight="750.0" prefWidth="1125.0">
+      <AnchorPane fx:id="loginScreenParent" id="loginFormBackground" prefHeight="750.0" prefWidth="1125.0" styleClass="default-background">
          <children>
             <ImageView fitHeight="113.0" fitWidth="561.0" layoutX="467.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                <image>

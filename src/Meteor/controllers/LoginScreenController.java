@@ -18,7 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class LoginController {
+public class LoginScreenController {
 
     @FXML
     private JFXTextField loginField;
@@ -41,10 +41,6 @@ public class LoginController {
 
     @FXML
     void initialize() {
-        assert signInButton != null : "fx:id=\"signInButton\" was not injected: check your FXML file 'login.fxml'.";
-        assert createAccountButton != null : "fx:id=\"createAccountButton\" was not injected: check your FXML file 'login.fxml'.";
-        assert loginField != null : "fx:id=\"loginField\" was not injected: check your FXML file 'login.fxml'.";
-        assert passwordField != null : "fx:id=\"passwordField\" was not injected: check your FXML file 'login.fxml'.";
         /*signInButton.setOnAction(event -> {
             System.out.println("u pressed login button");
         });*/
@@ -53,16 +49,9 @@ public class LoginController {
             Stage currentStage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             currentStage.setScene(Main.registrationScene);
             loginScreenParent.requestFocus();
-
-            //DBHandler dbHandler = new DBHandler();
-
-            //#TODO collect infro from textfields and radio box and then pass it to the method below
-
-
-            //dbHandler.addUser(new User("username" , "password", "first", "last", "gender"));
         });
         forgotPasswordButton.setOnAction(event -> {
-            System.out.println("u pressed for button");
+            
         });
     }
 }

@@ -21,7 +21,7 @@
             TITLE
 */
 .title{
-    -fx-font-family: "Montserrat Regular";
+    -fx-font-family: "Montserrat SemiBold";
     -fx-font-size: 28px;
 }
 
@@ -82,12 +82,15 @@
 /*
             LOGIN FORM
  */
-#loginFormBackground, #registrationFormBackground {
+.default-background{
     -fx-background-image: url("../assets/background.jpg");
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
 }
-
+.no-focus:focused{
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
 /*
             BUTTONS
  */

@@ -23,14 +23,14 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <AnchorPane fx:id="registrationScreenParent" id="registrationFormBackground" prefHeight="750.0" prefWidth="1125.0">
+      <AnchorPane id="registrationFormBackground" fx:id="registrationScreenParent" prefHeight="750.0" prefWidth="1125.0" styleClass="default-background">
          <children>
             <ImageView fitHeight="113.0" fitWidth="561.0" layoutX="467.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/logo.png" />
                </image>
             </ImageView>
-            <AnchorPane layoutX="434.0" layoutY="286.0" minHeight="60.0" minWidth="256.0" prefHeight="60.0" prefWidth="256.0">
+            <AnchorPane layoutX="434.0" layoutY="263.0" minHeight="60.0" minWidth="256.0" prefHeight="60.0" prefWidth="256.0">
                <children>
                   <JFXTextField fx:id="loginField" layoutY="24.0" prefHeight="36.0" prefWidth="256.0" styleClass="text-field--magenta">
                      <padding>
@@ -40,7 +40,7 @@
                   <Label styleClass="text-field--label" text="Login" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="434.0" layoutY="354.0" minHeight="60.0" minWidth="256.0" prefHeight="60.0" prefWidth="256.0">
+            <AnchorPane layoutX="434.0" layoutY="331.0" minHeight="60.0" minWidth="256.0" prefHeight="60.0" prefWidth="256.0">
                <children>
                   <Label styleClass="password-field--label" text="Password" />
                   <JFXPasswordField fx:id="passwordField" layoutY="22.0" prefHeight="36.0" prefWidth="256.0" styleClass="password-field--magenta">
@@ -50,7 +50,17 @@
                   </JFXPasswordField>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="433.0" layoutY="420.0" minHeight="60.0" minWidth="256.0" prefHeight="60.0" prefWidth="256.0">
+            <AnchorPane layoutX="433.0" layoutY="397.0" minHeight="60.0" minWidth="256.0" prefHeight="60.0" prefWidth="256.0">
+               <children>
+                  <JFXTextField fx:id="emailField" layoutY="22.0" prefHeight="36.0" prefWidth="256.0" styleClass="text-field--magenta">
+                     <padding>
+                        <Insets left="8.0" />
+                     </padding>
+                  </JFXTextField>
+                  <Label styleClass="text-field--label" text="E-mail" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="432.0" layoutY="463.0" minHeight="60.0" minWidth="256.0" prefHeight="60.0" prefWidth="256.0">
                <children>
                   <JFXTextField fx:id="fullNameField" layoutY="22.0" prefHeight="36.0" prefWidth="256.0" styleClass="text-field--magenta">
                      <padding>
@@ -60,48 +70,39 @@
                   <Label styleClass="text-field--label" text="Full Name" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="433.0" layoutY="536.0" minHeight="36.0" minWidth="256.0" prefHeight="36.0" prefWidth="256.0">
-               <children>
-                  <JFXButton fx:id="createAccountButton" prefHeight="36.0" prefWidth="256.0" text="CREATE ACCOUNT">
-                     <styleClass>
-                        <String fx:value="button" />
-                        <String fx:value="button__primary--magenta" />
-                     </styleClass>
-                  </JFXButton>
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutX="434.0" layoutY="587.0" minHeight="36.0" prefHeight="36.0">
-                <children>
-                  <JFXButton fx:id="alreadySignedUpButton" text="ALREADY SIGNED UP?">
-                     <styleClass>
-                        <String fx:value="button__tertiary" />
-                        <String fx:value="button" />
-                     </styleClass>
-                  </JFXButton>
-                </children>
-            </AnchorPane>
-            <AnchorPane layoutX="358.0" layoutY="258.0" prefHeight="38.0" prefWidth="92.0" />
-            <Label layoutX="452.0" layoutY="220.0" text="Create account">
+            <Label layoutX="452.0" layoutY="200.0" text="Create account">
                <styleClass>
                   <String fx:value="title" />
                   <String fx:value="title--white" />
                </styleClass>
             </Label>
-             <JFXRadioButton fx:id="femaleRadioButton" layoutX="569.0" layoutY="497.0" text="Female">
+             <JFXRadioButton fx:id="femaleRadioButton" layoutX="573.0" layoutY="539.0" text="Female">
                  <styleClass>
                      <String fx:value="radio-button" />
                      <String fx:value="radio-button--magenta" />
                  </styleClass>
                <toggleGroup>
-                  <ToggleGroup fx:id="gender" />
+                  <ToggleGroup fx:id="genderField" />
                </toggleGroup>
              </JFXRadioButton>
-             <JFXRadioButton fx:id="maleRadioButton" layoutX="452.0" layoutY="476.0" style="-fx-padding: 20;" text="Male" toggleGroup="$gender">
+             <JFXRadioButton fx:id="maleRadioButton" layoutX="456.0" layoutY="539.0" selected="true" text="Male" toggleGroup="$genderField">
                  <styleClass>
                      <String fx:value="radio-button" />
                      <String fx:value="radio-button--magenta" />
                  </styleClass>
              </JFXRadioButton>
+            <JFXButton fx:id="createAccountButton" layoutX="432.0" layoutY="579.0" prefHeight="36.0" prefWidth="256.0" text="CREATE ACCOUNT">
+               <styleClass>
+                  <String fx:value="button" />
+                  <String fx:value="button__primary--magenta" />
+               </styleClass>
+            </JFXButton>
+             <JFXButton fx:id="alreadySignedUpButton" layoutX="432.0" layoutY="632.0" text="ALREADY SIGNED UP?">
+                 <styleClass>
+                     <String fx:value="button__tertiary" />
+                     <String fx:value="button" />
+                 </styleClass>
+             </JFXButton>
          </children>
       </AnchorPane>
    </children>
