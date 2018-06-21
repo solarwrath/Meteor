@@ -54,13 +54,19 @@ public class RegistrationFormController {
     @FXML
     void initialize(){
         createAccountButton.setOnAction(event -> {
-            DBHandler dbHandler = new DBHandler();
-            dbHandler.addUser(new User(loginField.getText() , passwordField.getText(), emailField.getText(), fullNameField.getText(), ((JFXRadioButton) genderField.getSelectedToggle()).getText()));
+            User givenUser = new User(loginField.getText() , passwordField.getText(), emailField.getText(), fullNameField.getText(), ((JFXRadioButton) genderField.getSelectedToggle()).getText());
+            if(givenUser.validateUser(givenUser).isEmpty()){
+                DBHandler dbHandler = new DBHandler();
+                dbHandler.addUser(givenUser);
+            }
+            else{
+
+            }
 
             Stage currentStage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             currentStage.setScene(Main.postRegistrationScene);
             registrationScreenParent.requestFocus();
-
+\
         });
         alreadySignedUpButton.setOnAction(event -> {
             Stage currentStage = (Stage) ((Node)event.getSource()).getScene().getWindow();
