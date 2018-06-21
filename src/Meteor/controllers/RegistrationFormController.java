@@ -15,8 +15,11 @@ import javafx.scene.Node;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class RegistrationFormController {
 
@@ -50,23 +53,33 @@ public class RegistrationFormController {
     @FXML
     private JFXButton alreadySignedUpButton;
 
+    @FXML
+    private ImageView loginMarker;
+
 
     @FXML
     void initialize(){
         createAccountButton.setOnAction(event -> {
             User givenUser = new User(loginField.getText() , passwordField.getText(), emailField.getText(), fullNameField.getText(), ((JFXRadioButton) genderField.getSelectedToggle()).getText());
+            System.out.println(givenUser.validateUser(givenUser).toString());
             if(givenUser.validateUser(givenUser).isEmpty()){
                 DBHandler dbHandler = new DBHandler();
                 dbHandler.addUser(givenUser);
+                loginMarker.setVisible(false);
+
+                Stage currentStage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+                currentStage.setScene(Main.postRegistrationScene);
+                registrationScreenParent.requestFocus();
             }
             else{
-
+                System.out.println("debug 2");
+                ArrayList<String> listOfErrors = givenUser.validateUser(givenUser);
+                if(listOfErrors.contains("username")){
+                    loginMarker.setVisible(true);
+                    // Maybe not very user-friendly
+                    // loginField.setPromptText("2-20 characters without whitespaces");
+                }
             }
-
-            Stage currentStage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            currentStage.setScene(Main.postRegistrationScene);
-            registrationScreenParent.requestFocus();
-\
         });
         alreadySignedUpButton.setOnAction(event -> {
             Stage currentStage = (Stage) ((Node)event.getSource()).getScene().getWindow();

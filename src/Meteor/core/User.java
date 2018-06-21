@@ -1,7 +1,5 @@
 package Meteor.core;
 
-import org.jcp.xml.dsig.internal.dom.ApacheCanonicalizer;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -95,7 +93,7 @@ public class User {
     }
 
     public boolean isValidUsename(String givenUsername) {
-        if (givenUsername == null || givenUsername.length() == 0 || givenUsername.length() > 20) {
+        if (givenUsername == null || givenUsername.length() == 0 || givenUsername.length() < 2 || givenUsername.length() > 20 || givenUsername.trim().contains(" ")) {
             return false;
         } else {
             return true;
@@ -140,7 +138,6 @@ public class User {
         if(!isValidFullName(givenUser.getFullName())){
             listOfErrors.add("full_name");
         }
-
         return listOfErrors;
     }
 

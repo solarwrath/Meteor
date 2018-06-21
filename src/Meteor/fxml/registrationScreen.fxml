@@ -25,6 +25,7 @@
    <children>
       <AnchorPane id="registrationFormBackground" fx:id="registrationScreenParent" prefHeight="750.0" prefWidth="1125.0" styleClass="default-background">
          <children>
+            <AnchorPane prefHeight="24.0" prefWidth="24.0" />
             <ImageView fitHeight="113.0" fitWidth="561.0" layoutX="467.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/logo.png" />
@@ -103,6 +104,11 @@
                      <String fx:value="button" />
                  </styleClass>
              </JFXButton>
+            <ImageView fx:id="loginMarker" fitHeight="24.0" fitWidth="24.0" layoutX="710.0" layoutY="293.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../assets/important_marker.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>

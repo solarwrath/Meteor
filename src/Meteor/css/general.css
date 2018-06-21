@@ -91,6 +91,8 @@
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 }
+
+
 /*
             BUTTONS
  */
@@ -148,8 +150,10 @@
     -fx-font-family: "Montserrat SemiBold";
     -fx-font-size: 10px;
     -fx-text-fill: #f3f3f3;
+    -fx-prompt-text-fill: #f3f3f3;
     -jfx-unfocus-color: transparent;
     -jfx-focus-color: transparent;
+
 }
     .text-field--label {
         -fx-font-family: "Montserrat SemiBold";
