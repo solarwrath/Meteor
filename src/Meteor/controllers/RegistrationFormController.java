@@ -54,16 +54,22 @@ public class RegistrationFormController {
     private Label loginImportantMessage;
 
     @FXML
+    private Label loginImportantMessageDups;
+
+    @FXML
     private ImageView passwordImportantMarker;
 
     @FXML
     private Label passwordImportantMessage;
 
     @FXML
-    private ImageView emailmportantMarker;
+    private ImageView emailImportantMarker;
 
     @FXML
     private Label emailImportantMessage;
+
+    @FXML
+    private Label emailImportantMessageDups;
 
     @FXML
     private ImageView fullNameImportantMarker;
@@ -82,11 +88,9 @@ public class RegistrationFormController {
     void initialize(){
         createAccountButton.setOnAction(event -> {
             User givenUser = new User(loginField.getText() , passwordField.getText(), emailField.getText(), fullNameField.getText(), ((JFXRadioButton) genderField.getSelectedToggle()).getText());
-            System.out.println(givenUser.validateUser(givenUser).toString());
-            if(givenUser.validateUser(givenUser).isEmpty()){
-                DBHandler dbHandler = new DBHandler();
-                dbHandler.addUser(givenUser);
-                for (Node givenNode: new ArrayList<Node>(asList(loginImportantMessage, loginImportantMarker, passwordImportantMarker, passwordImportantMessage, emailmportantMarker, emailImportantMessage, fullNameImportantMarker, fullNameImportantMessage))) {
+           if(givenUser.validateUser(givenUser).isEmpty()){
+                DBHandler.addUser(givenUser);
+                for (Node givenNode: new ArrayList<Node>(asList(loginImportantMessage, loginImportantMessageDups, loginImportantMarker, passwordImportantMarker, passwordImportantMessage, emailImportantMarker, emailImportantMessage, fullNameImportantMarker, fullNameImportantMessage))) {
                     givenNode.setVisible(false);
                 };
                 for (Control givenControl: new ArrayList<Control>(asList(loginField, emailField, fullNameField))) {
@@ -104,7 +108,7 @@ public class RegistrationFormController {
             }
             else{
                 ArrayList<String> listOfErrors = givenUser.validateUser(givenUser);
-                switch (listOfErrors.get(0).toString()){
+                switch (listOfErrors.get(0)){
                     case "username":
                     case "username_already_taken":
                         loginField.requestFocus();
@@ -114,20 +118,34 @@ public class RegistrationFormController {
                         break;
                     case "email":
                     case "email_already_taken":
-                        emailmportantMarker.requestFocus();
+                        emailImportantMarker.requestFocus();
                         break;
                     case "full_name":
                         fullNameField.requestFocus();
                         break;
                 }
+
                 if(listOfErrors.contains("username")){
-                    loginImportantMarker.setVisible(true);
                     loginImportantMessage.setVisible(true);
                 }
                 else{
-                    loginImportantMarker.setVisible(false);
                     loginImportantMessage.setVisible(false);
                 }
+
+                if(listOfErrors.contains("username_already_taken")){
+                    loginImportantMessageDups.setVisible(true);
+                }
+                else{
+                    loginImportantMessageDups.setVisible(false);
+                }
+
+
+                if (listOfErrors.contains("username") || listOfErrors.contains("username_already_taken")) {
+                    loginImportantMarker.setVisible(true);
+                } else {
+                    loginImportantMarker.setVisible(false);
+                }
+
                 if(listOfErrors.contains("password")){
                     passwordImportantMarker.setVisible(true);
                     passwordImportantMessage.setVisible(true);
@@ -136,14 +154,27 @@ public class RegistrationFormController {
                     passwordImportantMarker.setVisible(false);
                     passwordImportantMessage.setVisible(false);
                 }
+
                 if(listOfErrors.contains("email")){
-                    emailmportantMarker.setVisible(true);
                     emailImportantMessage.setVisible(true);
                 }
                 else{
-                    emailmportantMarker.setVisible(false);
                     emailImportantMessage.setVisible(false);
                 }
+
+                if(listOfErrors.contains("email_already_taken")){
+                    emailImportantMessageDups.setVisible(true);
+                }
+                else{
+                    emailImportantMessageDups.setVisible(false);
+                }
+
+                if (listOfErrors.contains("email") || listOfErrors.contains("email_already_taken")) {
+                    emailImportantMarker.setVisible(true);
+                } else {
+                    emailImportantMarker.setVisible(false);
+                }
+
                 if(listOfErrors.contains("full_name")){
                     fullNameImportantMarker.setVisible(true);
                     fullNameImportantMessage.setVisible(true);

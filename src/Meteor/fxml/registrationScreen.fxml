@@ -109,6 +109,7 @@
                   <Image url="@../assets/important__marker.png" />
                </image>
             </ImageView>
+            <Label fx:id="loginImportantMessageDups" layoutX="754.0" layoutY="288.0" styleClass="important__text" text="This login has been already taken&#10;" visible="false" />
             <Label fx:id="loginImportantMessage" layoutX="754.0" layoutY="280.0" styleClass="important__text" text="Login must be 2-20 characters long&#10;and mustn't contain whitespaces." visible="false" />
             <ImageView fx:id="passwordImportantMarker" fitHeight="24.0" fitWidth="24.0" layoutX="710.0" layoutY="359.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
@@ -116,12 +117,13 @@
                </image>
             </ImageView>
             <Label fx:id="passwordImportantMessage" layoutX="754.0" layoutY="346.0" styleClass="important__text" text="Password must be 3-30 characters long&#10;and mustn't contain whitespaces." visible="false" />
-            <ImageView fx:id="emailmportantMarker" fitHeight="24.0" fitWidth="24.0" layoutX="710.0" layoutY="425.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fx:id="emailImportantMarker" fitHeight="24.0" fitWidth="24.0" layoutX="710.0" layoutY="425.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../assets/important__marker.png" />
                </image>
             </ImageView>
             <Label fx:id="emailImportantMessage" layoutX="754.0" layoutY="413.0" styleClass="important__text" text="E-mail must follow your regular web &#10;standard form: username@gmail.com" visible="false" />
+            <Label fx:id="emailImportantMessageDups" layoutX="754.0" layoutY="421.0" styleClass="important__text" text="E-mail has been already taken&#10;" visible="false" />
             <ImageView fx:id="fullNameImportantMarker" fitHeight="24.0" fitWidth="24.0" layoutX="710.0" layoutY="491.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../assets/important__marker.png" />

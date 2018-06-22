@@ -126,9 +126,8 @@ public class User {
     }
 
     public boolean usernameAlreadyTaken(String givenUsername){
-        DBHandler dbHandler = new DBHandler();
         try{
-            return dbHandler.returnFromSQLQuery("SELECT EXISTS(SELECT * FROM students WHERE username='"+givenUsername+"'").next();
+            return DBHandler.returnFromSQLQuery("SELECT * FROM students WHERE username='"+givenUsername+"'").next();
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -137,9 +136,8 @@ public class User {
     }
 
     public boolean emailAlreadyTaken(String givenEmail){
-        DBHandler dbHandler = new DBHandler();
         try{
-            return dbHandler.returnFromSQLQuery("SELECT EXISTS(SELECT * FROM students WHERE email='"+givenEmail+"'").next();
+            return DBHandler.returnFromSQLQuery("SELECT * FROM students WHERE email='"+givenEmail+"'").next();
         }
         catch (SQLException e){
             e.printStackTrace();

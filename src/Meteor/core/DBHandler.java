@@ -15,15 +15,21 @@ public class DBHandler {
     private static ResultSet rs;
 
     public DBHandler(){
+        getConnection();
+    }
+
+    private static void getConnection(){
         try {
             con = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
-
-    public void addUser(User givenUser){
+    public static void addUser(User givenUser){
+        //Choose between this or a method to get
+        getConnection();
         String givenUsername = givenUser.getUsername();
         String givenPassword = givenUser.getPassword();
         String givenEmail = givenUser.getEmail();
@@ -45,7 +51,8 @@ public class DBHandler {
         }
     }
 
-    public ResultSet returnFromSQLQuery(String givenSQLString) throws SQLException{
+    public static ResultSet returnFromSQLQuery(String givenSQLString) throws SQLException{
+        getConnection();
         return con.prepareStatement(givenSQLString).executeQuery();
     }
 }
