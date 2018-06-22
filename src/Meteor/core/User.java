@@ -1,5 +1,6 @@
 package Meteor.core;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -93,7 +94,7 @@ public class User {
     }
 
     public boolean isValidUsename(String givenUsername) {
-        if (givenUsername == null || givenUsername.length() == 0 || givenUsername.length() < 2 || givenUsername.length() > 20 || givenUsername.trim().contains(" ")) {
+        if (givenUsername == null || givenUsername.length() < 2 || givenUsername.length() > 20 || givenUsername.trim().contains(" ")) {
             return false;
         } else {
             return true;
@@ -101,7 +102,7 @@ public class User {
     }
 
     public boolean isValidPassword(String givenPassword) {
-        if (givenPassword == null || givenPassword.length() == 0 || givenPassword.length() > 30) {
+        if (givenPassword == null || givenPassword.length() < 3|| givenPassword.length() > 30 || givenPassword.trim().contains(" ")) {
             return false;
         } else {
             return true;
@@ -124,6 +125,28 @@ public class User {
         }
     }
 
+    public boolean usernameAlreadyTaken(String givenUsername){
+        DBHandler dbHandler = new DBHandler();
+        try{
+            return dbHandler.returnFromSQLQuery("SELECT EXISTS(SELECT * FROM students WHERE username='"+givenUsername+"'").next();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            return true;
+        }
+    }
+
+    public boolean emailAlreadyTaken(String givenEmail){
+        DBHandler dbHandler = new DBHandler();
+        try{
+            return dbHandler.returnFromSQLQuery("SELECT EXISTS(SELECT * FROM students WHERE email='"+givenEmail+"'").next();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            return true;
+        }
+    }
+
     public ArrayList<String> validateUser(User givenUser){
         ArrayList<String> listOfErrors = new ArrayList<>();
         if(!isValidUsename(givenUser.getUsername())){
@@ -137,6 +160,12 @@ public class User {
         }
         if(!isValidFullName(givenUser.getFullName())){
             listOfErrors.add("full_name");
+        }
+        if(usernameAlreadyTaken(givenUser.getUsername())){
+            listOfErrors.add("username_already_taken");
+        }
+        if(emailAlreadyTaken(givenUser.getEmail())){
+            listOfErrors.add("email_already_taken");
         }
         return listOfErrors;
     }

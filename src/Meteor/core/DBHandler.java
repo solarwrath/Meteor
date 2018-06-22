@@ -14,6 +14,14 @@ public class DBHandler {
     private static Statement stmt;
     private static ResultSet rs;
 
+    public DBHandler(){
+        try {
+            con = DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void addUser(User givenUser){
         String givenUsername = givenUser.getUsername();
@@ -22,11 +30,6 @@ public class DBHandler {
         String givenFullName = givenUser.getFullName();
         String givenGender = givenUser.getGender();
         Date currentDate = new Date(new java.util.Date().getTime());
-        try {
-            con = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         String sqlToExecute = "INSERT INTO students (username, password, email, full_name, gender, date_added)\n" +
                 "VALUES (?, ?, ?, ?, ?, ?); ";
         try (PreparedStatement preparedStatement = con.prepareStatement(sqlToExecute)) {
@@ -40,5 +43,9 @@ public class DBHandler {
         }catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public ResultSet returnFromSQLQuery(String givenSQLString) throws SQLException{
+        return con.prepareStatement(givenSQLString).executeQuery();
     }
 }

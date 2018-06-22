@@ -110,6 +110,16 @@
 }
 
 /*
+
+*/
+.important__text{
+    -fx-background-color: #9944FF;
+    -fx-padding: 10px;
+    -fx-background-radius: 4px;
+    -fx-font-family: "Montserrat Regular";
+    -fx-text-fill: #f3f3f3;
+}
+/*
            PRIMARY BUTTONS
 */
 
