@@ -1,10 +1,12 @@
 package Meteor.core;
 
-import Meteor.Main;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.paint.Paint;
+
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 public class LostConnectionScene extends Scene {
 
@@ -41,4 +43,34 @@ public class LostConnectionScene extends Scene {
     }
 
     private Scene previousScene;
+
+    public Method getPassedMethod() {
+        return passedMethod;
+    }
+
+    public void setPassedMethod(Method passedMethod) {
+        this.passedMethod = passedMethod;
+    }
+
+    private Method passedMethod;
+
+    private ArrayList<Object> passedParametrs;
+
+    public ArrayList<Object> getPassedParametrs() {
+        return passedParametrs;
+    }
+
+    public void setPassedParametrs(ArrayList<Object> passedParametrs) {
+        this.passedParametrs = passedParametrs;
+    }
+
+    private Class passedClass;
+
+    public Class getPassedClass() {
+        return passedClass;
+    }
+
+    public void setPassedClass(Class passedClass) {
+        this.passedClass = passedClass;
+    }
 }

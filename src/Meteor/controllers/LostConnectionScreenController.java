@@ -1,24 +1,16 @@
 package Meteor.controllers;
 
 import Meteor.Main;
+import Meteor.core.LostConnectionScene;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class LostConnectionScreenController {
-
-    public Scene previousScene;
-
-    public Scene getPreviousScene() {
-        return previousScene;
-    }
-
-    public void setPreviousScene(Scene previousScene) {
-        this.previousScene = previousScene;
-    }
 
     @FXML
     private AnchorPane lostConnectionScreenParent;
@@ -33,12 +25,22 @@ public class LostConnectionScreenController {
     void initialize(){
         //TODO Change this to have some actual functionality
         tryAgainButton.setOnAction(event -> {
-
+            LostConnectionScene lostConnectionScene = (LostConnectionScene)((Node)event.getSource()).getScene();
+            try {
+                lostConnectionScene.getPassedMethod().invoke(Class.forName(lostConnectionScene.getPassedClass().getName()).newInstance(), lostConnectionScene.getPassedParametrs());
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            }
         });
         goBackButton.setOnAction(event -> {
-            System.out.println("call button");
-            Main.changeScene(previousScene, (Stage) ((Node)event.getSource()).getScene().getWindow());
-
+            LostConnectionScene lostConnectionScene = (LostConnectionScene)((Node)event.getSource()).getScene();
+            Main.changeScene(lostConnectionScene.getPreviousScene(), (Stage) lostConnectionScene.getWindow());
             lostConnectionScreenParent.requestFocus();
         });
     }
