@@ -46,8 +46,7 @@ public class LoginScreenController {
         });*/
         createAccountButton.setOnAction(event -> {
 
-            Stage currentStage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            currentStage.setScene(Main.registrationScene);
+            Main.changeScene(Main.registrationScene, (Stage) ((Node)event.getSource()).getScene().getWindow());
             loginScreenParent.requestFocus();
         });
         forgotPasswordButton.setOnAction(event -> {

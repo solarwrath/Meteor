@@ -14,20 +14,15 @@ public class DBHandler {
     private static Statement stmt;
     private static ResultSet rs;
 
-    public DBHandler(){
+    public DBHandler() throws SQLException{
         getConnection();
     }
 
-    private static void getConnection(){
-        try {
-            con = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+    private static void getConnection() throws SQLException{
+        con = DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
-    public static void addUser(User givenUser){
+    public static void addUser(User givenUser) throws SQLException{
         //Choose between this or a method to get
         getConnection();
         String givenUsername = givenUser.getUsername();

@@ -1,5 +1,9 @@
 package Meteor.core;
 
+import com.mysql.cj.exceptions.ConnectionIsClosedException;
+import com.mysql.cj.jdbc.exceptions.CommunicationsException;
+
+import java.net.ConnectException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -135,17 +139,11 @@ public class User {
         }
     }
 
-    public boolean emailAlreadyTaken(String givenEmail){
-        try{
-            return DBHandler.returnFromSQLQuery("SELECT * FROM students WHERE email='"+givenEmail+"'").next();
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-            return true;
-        }
+    public boolean emailAlreadyTaken(String givenEmail) throws SQLException{
+        return DBHandler.returnFromSQLQuery("SELECT * FROM students WHERE email='"+givenEmail+"'").next();
     }
 
-    public ArrayList<String> validateUser(User givenUser){
+    public ArrayList<String> validateUser(User givenUser) throws SQLException, ConnectionIsClosedException, ConnectException, CommunicationsException {
         ArrayList<String> listOfErrors = new ArrayList<>();
         if(!isValidUsename(givenUser.getUsername())){
             listOfErrors.add("username");
