@@ -11,6 +11,7 @@ import com.mysql.cj.exceptions.ConnectionIsClosedException;
 import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -20,6 +21,8 @@ import javafx.stage.Stage;
 import java.net.ConnectException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -90,41 +93,63 @@ public class RegistrationFormController {
 
 
     @FXML
-    void initialize() {
+    public void initialize() {
         createAccountButton.setOnAction(this::registerUser);
 
         alreadySignedUpButton.setOnAction(event -> {
             Main.changeScene(Main.loginScene, (Stage) ((Node) event.getSource()).getScene().getWindow());
             registrationScreenParent.requestFocus();
         });
+
+        /*createAccountButton.getScene().getRoot().inisetOnShown(event -> {
+            System.out.println("shown");
+            if (Main.registrationScene != null) {
+                if ((Boolean) Main.registrationScene.getProperties().get("initializeWithValidation")) {
+                    try {
+                        displayErrors(createUserFromUI());
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (ConnectException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });*/
+
     }
+
 
     //TODO et rid of event probably or rewrite general method of tlost connection scene
 
     public void registerUser(Event event) {
-        ArrayList<Object> passedParameters = new ArrayList<>(3); //TODO GET AQUANINTED WITH THIS
-        passedParameters.ensureCapacity(3);
-        passedParameters.add(event);
+        HashMap<String, Object> passedParameters = new HashMap<String, Object>();
+        passedParameters.put("event", event);
         registerUser(passedParameters);
     }
 
-    public void registerUser(ArrayList<Object> reflectedArguments) {
-        Event event = (Event) reflectedArguments.get(0);
-        System.out.println(reflectedArguments.toString());
-        System.out.println(reflectedArguments.size());
+    @SuppressWarnings("Duplicates")
+    public void registerUser(HashMap<String, Object> reflectedArguments) {
+        Event event = (Event) reflectedArguments.get("event");
         if (reflectedArguments.size() > 1) {
-            System.out.println("before check");
-            System.out.println(reflectedArguments.get(1).toString());
-            if(reflectedArguments.stream().anyMatch(e -> e.getClass().isInstance(User.class))){
+            if(reflectedArguments.containsKey("user") && reflectedArguments.containsKey("lost_connection_stage")){
+                User givenUser = (User)reflectedArguments.get("user");
                 try {
-                    DBHandler.addUser((User) reflectedArguments.stream().filter(e -> e.getClass().isInstance(User.class)).findFirst().get());
-                    System.out.println("in the reflected");
-                } catch (SQLException e) {
+                    if(givenUser.validateUser(givenUser).isEmpty()){
+                        DBHandler.addUser(givenUser);
+                        Main.changeScene(Main.postRegistrationScene, (Stage)reflectedArguments.get("lost_connection_stage"));
+                        ((Stage) reflectedArguments.get("lost_connection_stage")).requestFocus();
+                    }
+                    else{
+                        Main.changeScene(Main.registrationScene, (Stage)reflectedArguments.get("lost_connection_stage"));
+                        Main.registrationScene.getProperties().put("initializeWithValidation", true);
+                        ((Stage) reflectedArguments.get("lost_connection_stage")).requestFocus();
+                    }
+                } catch (ConnectException|SQLException e) {
                     e.printStackTrace();
                 }
-            };
+            }
         } else {
-            User givenUser = new User(loginField.getText(), passwordField.getText(), emailField.getText(), fullNameField.getText(), ((JFXRadioButton) genderField.getSelectedToggle()).getText());
+            User givenUser = createUserFromUI();
             try {
                 if (givenUser.validateUser(givenUser).isEmpty()) {
                     DBHandler.addUser(givenUser);
@@ -145,80 +170,19 @@ public class RegistrationFormController {
                     Main.changeScene(Main.postRegistrationScene, (Stage) ((Node) event.getSource()).getScene().getWindow());
                     registrationScreenParent.requestFocus();
                 } else {
-                    ArrayList<String> listOfErrors = givenUser.validateUser(givenUser);
-                    switch (listOfErrors.get(0)) {
-                        case "username":
-                        case "username_already_taken":
-                            loginField.requestFocus();
-                            break;
-                        case "password":
-                            passwordField.requestFocus();
-                            break;
-                        case "email":
-                        case "email_already_taken":
-                            emailImportantMarker.requestFocus();
-                            break;
-                        case "full_name":
-                            fullNameField.requestFocus();
-                            break;
-                    }
-
-                    if (listOfErrors.contains("username")) {
-                        loginImportantMessage.setVisible(true);
-                    } else {
-                        loginImportantMessage.setVisible(false);
-                    }
-
-                    if (listOfErrors.contains("username_already_taken")) {
-                        loginImportantMessageDups.setVisible(true);
-                    } else {
-                        loginImportantMessageDups.setVisible(false);
-                    }
-
-
-                    if (listOfErrors.contains("username") || listOfErrors.contains("username_already_taken")) {
-                        loginImportantMarker.setVisible(true);
-                    } else {
-                        loginImportantMarker.setVisible(false);
-                    }
-
-                    if (listOfErrors.contains("password")) {
-                        passwordImportantMarker.setVisible(true);
-                        passwordImportantMessage.setVisible(true);
-                    } else {
-                        passwordImportantMarker.setVisible(false);
-                        passwordImportantMessage.setVisible(false);
-                    }
-
-                    if (listOfErrors.contains("email")) {
-                        emailImportantMessage.setVisible(true);
-                    } else {
-                        emailImportantMessage.setVisible(false);
-                    }
-
-                    if (listOfErrors.contains("email_already_taken")) {
-                        emailImportantMessageDups.setVisible(true);
-                    } else {
-                        emailImportantMessageDups.setVisible(false);
-                    }
-
-                    if (listOfErrors.contains("email") || listOfErrors.contains("email_already_taken")) {
-                        emailImportantMarker.setVisible(true);
-                    } else {
-                        emailImportantMarker.setVisible(false);
-                    }
-                    if (listOfErrors.contains("full_name")) {
-                        fullNameImportantMarker.setVisible(true);
-                        fullNameImportantMessage.setVisible(true);
-                    } else {
-                        fullNameImportantMarker.setVisible(false);
-                        fullNameImportantMessage.setVisible(false);
-                    }
+                    displayErrors(givenUser);
                 }
             } catch (CommunicationsException e) {
                 e.printStackTrace();
                 try {
-                    Main.callLostConnectionScene((Stage) ((Node) event.getSource()).getScene().getWindow(), getClass().getDeclaredMethod("registerUser", ArrayList.class), new ArrayList<Object>(asList(event, givenUser)), this.getClass());
+                    Main.callLostConnectionScene(
+                            (Stage) ((Node) event.getSource()).getScene().getWindow(),
+                            getClass().getDeclaredMethod("registerUser", HashMap.class),
+                            new HashMap<String, Object>(){{
+                                put("event", event);
+                                put("user", givenUser);
+                            }},
+                            this.getClass());
                 } catch (NoSuchMethodException noSuchMethodException) {
                     noSuchMethodException.printStackTrace();
                 }
@@ -226,13 +190,97 @@ public class RegistrationFormController {
             } catch (SQLException | ConnectionIsClosedException | ConnectException e) {
                 e.printStackTrace();
                 try {
-                    Main.callLostConnectionScene((Stage) ((Node) event.getSource()).getScene().getWindow(), getClass().getDeclaredMethod("registerUser", ArrayList.class), new ArrayList<Object>(asList(event, givenUser)), this.getClass());
-                } catch (NoSuchMethodException noSuchMethodException) {
+                    Main.callLostConnectionScene(
+                            (Stage) ((Node) event.getSource()).getScene().getWindow(),
+                            getClass().getDeclaredMethod("registerUser", HashMap.class),
+                            new HashMap<String, Object>(){{
+                                put("event", event);
+                                put("user", givenUser);
+                            }},
+                            this.getClass());} catch (NoSuchMethodException noSuchMethodException) {
                     noSuchMethodException.printStackTrace();
                 }
                 registrationScreenParent.requestFocus();
             }
         }
+    }
+
+    private void displayErrors(User givenUser) throws SQLException, ConnectException{
+
+        ArrayList<String> listOfErrors = givenUser.validateUser(givenUser);
+        switch (listOfErrors.get(0)) {
+            case "username":
+            case "username_already_taken":
+                System.out.println(loginField.toString());
+                loginField.requestFocus();
+                break;
+            case "password":
+                passwordField.requestFocus();
+                break;
+            case "email":
+            case "email_already_taken":
+                emailField.requestFocus();
+                break;
+            case "full_name":
+                fullNameField.requestFocus();
+                break;
+        }
+
+        if (listOfErrors.contains("username")) {
+            loginImportantMessage.setVisible(true);
+        } else {
+            loginImportantMessage.setVisible(false);
+        }
+
+        if (listOfErrors.contains("username_already_taken")) {
+            loginImportantMessageDups.setVisible(true);
+        } else {
+            loginImportantMessageDups.setVisible(false);
+        }
+
+
+        if (listOfErrors.contains("username") || listOfErrors.contains("username_already_taken")) {
+            loginImportantMarker.setVisible(true);
+        } else {
+            loginImportantMarker.setVisible(false);
+        }
+
+        if (listOfErrors.contains("password")) {
+            passwordImportantMarker.setVisible(true);
+            passwordImportantMessage.setVisible(true);
+        } else {
+            passwordImportantMarker.setVisible(false);
+            passwordImportantMessage.setVisible(false);
+        }
+
+        if (listOfErrors.contains("email")) {
+            emailImportantMessage.setVisible(true);
+        } else {
+            emailImportantMessage.setVisible(false);
+        }
+
+        if (listOfErrors.contains("email_already_taken")) {
+            emailImportantMessageDups.setVisible(true);
+        } else {
+            emailImportantMessageDups.setVisible(false);
+        }
+
+        if (listOfErrors.contains("email") || listOfErrors.contains("email_already_taken")) {
+            emailImportantMarker.setVisible(true);
+        } else {
+            emailImportantMarker.setVisible(false);
+        }
+        if (listOfErrors.contains("full_name")) {
+            fullNameImportantMarker.setVisible(true);
+            fullNameImportantMessage.setVisible(true);
+        } else {
+            fullNameImportantMarker.setVisible(false);
+            fullNameImportantMessage.setVisible(false);
+        }
+    }
+
+    public User createUserFromUI(){
+        return new User(loginField.getText(), passwordField.getText(), emailField.getText(), fullNameField.getText(), ((JFXRadioButton) genderField.getSelectedToggle()).getText());
     }
 
 }

@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 public class LostConnectionScreenController {
 
@@ -27,6 +28,7 @@ public class LostConnectionScreenController {
         tryAgainButton.setOnAction(event -> {
             LostConnectionScene lostConnectionScene = (LostConnectionScene)((Node)event.getSource()).getScene();
             try {
+                lostConnectionScene.getPassedParametrs().put("lost_connection_stage", (Stage) lostConnectionScene.getWindow());
                 lostConnectionScene.getPassedMethod().invoke(Class.forName(lostConnectionScene.getPassedClass().getName()).newInstance(), lostConnectionScene.getPassedParametrs());
             } catch (IllegalAccessException e) {
                 e.printStackTrace();

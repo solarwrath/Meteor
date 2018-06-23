@@ -6,7 +6,7 @@ import javafx.scene.SceneAntialiasing;
 import javafx.scene.paint.Paint;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class LostConnectionScene extends Scene {
 
@@ -54,13 +54,13 @@ public class LostConnectionScene extends Scene {
 
     private Method passedMethod;
 
-    private ArrayList<Object> passedParametrs;
+    private HashMap<String, Object> passedParametrs;
 
-    public ArrayList<Object> getPassedParametrs() {
+    public HashMap<String, Object> getPassedParametrs() {
         return passedParametrs;
     }
 
-    public void setPassedParametrs(ArrayList<Object> passedParametrs) {
+    public void setPassedParametrs(HashMap<String, Object> passedParametrs) {
         this.passedParametrs = passedParametrs;
     }
 

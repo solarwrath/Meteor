@@ -1,5 +1,6 @@
 package Meteor;
 
+import Meteor.controllers.LostConnectionScreenController;
 import Meteor.core.LostConnectionScene;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,8 @@ import javafx.stage.*;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 public class Main extends Application {
@@ -45,7 +48,7 @@ public class Main extends Application {
         currentStage.setScene(givenScene);
     }
 
-    public static void callLostConnectionScene(Stage givenStage, Method givenMethod, ArrayList<Object> givenParameters, Class givenClass){
+    public static void callLostConnectionScene(Stage givenStage, Method givenMethod, HashMap<String, Object> givenParameters, Class givenClass){
         lostConnectionScene.setPreviousScene(givenStage.getScene());
         lostConnectionScene.setPassedMethod(givenMethod);
         lostConnectionScene.setPassedParametrs(givenParameters);
@@ -56,4 +59,5 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 }
