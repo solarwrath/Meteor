@@ -9,30 +9,30 @@ import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import com.mysql.cj.exceptions.ConnectionIsClosedException;
 import com.mysql.cj.jdbc.exceptions.CommunicationsException;
+import javafx.beans.binding.Binding;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.fxmisc.easybind.EasyBind;
 
 import java.net.ConnectException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 import static java.util.Arrays.asList;
 
 public class RegistrationFormController {
 
+    private Scene thisScene = Main.registrationScene;
+
     @FXML
-    private AnchorPane registrationScreenParent;
+    protected AnchorPane registrationScreenParent;
 
     @FXML
     private JFXTextField loginField;
@@ -94,32 +94,36 @@ public class RegistrationFormController {
 
     @FXML
     public void initialize() {
-        createAccountButton.setOnAction(this::registerUser);
+        createAccountButton.setOnAction(event -> {
+
+            Binding<Boolean> bb = EasyBind.select(Main.registrationScene.getRoot().sceneProperty())
+                    .select(s -> s.windowProperty())
+                    .selectObject(w -> w.showingProperty());
+
+            bb.addListener((observable, oldValue, newValue) -> {
+                if(newValue){
+                    if(Main.registrationScene.getProperties().containsKey("displayErrorsRequired")){
+                        if((Boolean)Main.registrationScene.getProperties().get("displayErrorsRequired")){
+                            try {
+                                displayErrors(createUserFromUI());
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            } catch (ConnectException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            });
+
+            registerUser(event);
+        });
 
         alreadySignedUpButton.setOnAction(event -> {
             Main.changeScene(Main.loginScene, (Stage) ((Node) event.getSource()).getScene().getWindow());
             registrationScreenParent.requestFocus();
         });
-
-        /*createAccountButton.getScene().getRoot().inisetOnShown(event -> {
-            System.out.println("shown");
-            if (Main.registrationScene != null) {
-                if ((Boolean) Main.registrationScene.getProperties().get("initializeWithValidation")) {
-                    try {
-                        displayErrors(createUserFromUI());
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    } catch (ConnectException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });*/
-
     }
-
-
-    //TODO et rid of event probably or rewrite general method of tlost connection scene
 
     public void registerUser(Event event) {
         HashMap<String, Object> passedParameters = new HashMap<String, Object>();
@@ -136,12 +140,12 @@ public class RegistrationFormController {
                 try {
                     if(givenUser.validateUser(givenUser).isEmpty()){
                         DBHandler.addUser(givenUser);
-                        Main.changeScene(Main.postRegistrationScene, (Stage)reflectedArguments.get("lost_connection_stage"));
+                        Main.changeScene(thisScene, (Stage)reflectedArguments.get("lost_connection_stage"));
                         ((Stage) reflectedArguments.get("lost_connection_stage")).requestFocus();
                     }
                     else{
-                        Main.changeScene(Main.registrationScene, (Stage)reflectedArguments.get("lost_connection_stage"));
-                        Main.registrationScene.getProperties().put("initializeWithValidation", true);
+                        Main.registrationScene.getProperties().put("displayErrorsRequired", true);
+                        Main.changeScene(thisScene, (Stage)reflectedArguments.get("lost_connection_stage"));
                         ((Stage) reflectedArguments.get("lost_connection_stage")).requestFocus();
                     }
                 } catch (ConnectException|SQLException e) {
@@ -170,7 +174,7 @@ public class RegistrationFormController {
                     Main.changeScene(Main.postRegistrationScene, (Stage) ((Node) event.getSource()).getScene().getWindow());
                     registrationScreenParent.requestFocus();
                 } else {
-                    displayErrors(givenUser);
+                   displayErrors(givenUser);
                 }
             } catch (CommunicationsException e) {
                 e.printStackTrace();
@@ -211,7 +215,6 @@ public class RegistrationFormController {
         switch (listOfErrors.get(0)) {
             case "username":
             case "username_already_taken":
-                System.out.println(loginField.toString());
                 loginField.requestFocus();
                 break;
             case "password":

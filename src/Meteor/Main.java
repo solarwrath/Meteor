@@ -1,19 +1,20 @@
 package Meteor;
 
-import Meteor.controllers.LostConnectionScreenController;
 import Meteor.core.LostConnectionScene;
 import javafx.application.Application;
+import javafx.beans.binding.Binding;
+import javafx.beans.value.ChangeListener;
+import javafx.collections.MapChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.text.Font;
 import javafx.stage.*;
+import org.fxmisc.easybind.EasyBind;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 
 public class Main extends Application {
 
