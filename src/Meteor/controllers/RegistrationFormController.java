@@ -101,18 +101,22 @@ public class RegistrationFormController {
                     .selectObject(w -> w.showingProperty());
 
             bb.addListener((observable, oldValue, newValue) -> {
-                if(newValue){
-                    if(Main.registrationScene.getProperties().containsKey("displayErrorsRequired")){
-                        if((Boolean)Main.registrationScene.getProperties().get("displayErrorsRequired")){
-                            try {
-                                displayErrors(createUserFromUI());
-                            } catch (SQLException e) {
-                                e.printStackTrace();
-                            } catch (ConnectException e) {
-                                e.printStackTrace();
+                try {
+                    if (newValue) {
+                        if (Main.registrationScene.getProperties().containsKey("displayErrorsRequired")) {
+                            if ((Boolean) Main.registrationScene.getProperties().get("displayErrorsRequired")) {
+                                try {
+                                    displayErrors(createUserFromUI());
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                } catch (ConnectException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
+                } catch (NullPointerException e) {
+                    System.out.println(e.getMessage() + "\n" + e.getCause());
                 }
             });
 

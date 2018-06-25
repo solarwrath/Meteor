@@ -1,15 +1,13 @@
 package Meteor;
 
 import Meteor.core.LostConnectionScene;
+import Meteor.core.PropertiesConfig;
 import javafx.application.Application;
-import javafx.beans.binding.Binding;
-import javafx.beans.value.ChangeListener;
-import javafx.collections.MapChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.text.Font;
 import javafx.stage.*;
-import org.fxmisc.easybind.EasyBind;
+import org.aeonbits.owner.ConfigFactory;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -22,9 +20,14 @@ public class Main extends Application {
     public static Scene registrationScene;
     public static Scene postRegistrationScene;
     public static LostConnectionScene lostConnectionScene;
+    public static PropertiesConfig propertiesConfig = ConfigFactory.create(PropertiesConfig.class);
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        //TODO Need to go deeper and read more about all this stuff
+        //TODO Pbbly need to rewrite to wrap some functionality in the functions
+        //TODO Get rid of useless imports
+        //TODO More static main methods to attach listeners/bindings for example. BTW Listeners r need to be examined. They have rules and now I can't write them without IDEA
         for(String nameOfFont : new ArrayList<String>(Arrays.asList("SemiBold", "Bold", "Regular", "Light", "Medium"))){
             Font.loadFont(Main.class.getResource("assets/fonts/Montserrat-"+nameOfFont+".otf").toExternalForm(), 12);
         }

@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="libs" level="project" />
     <orderEntry type="library" name="easybind-1.0.4-20141114.135706-2-javadoc" level="application" />
+    <orderEntry type="library" name="owner-java8-extras-1.0.10" level="application" />
   </component>
 </module>

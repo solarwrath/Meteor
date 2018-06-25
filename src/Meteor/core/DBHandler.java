@@ -1,13 +1,16 @@
 package Meteor.core;
 
+import Meteor.Main;
+
 import java.lang.reflect.Array;
 import java.sql.*;
 
 public class DBHandler {
     // JDBC URL, username and password of MySQL server
-    private static final String URL = "jdbc:mysql://localhost:3306/unimanagement?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-    private static final String USER = "root";
-    private static final String PASSWORD = "";
+    private static PropertiesConfig config = Main.propertiesConfig;
+    private static final String URL = config.URL();
+    private static final String USER = config.user();
+    private static final String PASSWORD = config.password();
 
     // JDBC variables for opening and managing connection
     private static Connection con;
@@ -18,12 +21,12 @@ public class DBHandler {
         getConnection();
     }
 
+    //pbbly need to establish one connection per session somehow.
     private static void getConnection() throws SQLException{
         con = DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
     public static void addUser(User givenUser) throws SQLException{
-        //Choose between this or a method to get
         getConnection();
         String givenUsername = givenUser.getUsername();
         String givenPassword = givenUser.getPassword();
@@ -43,6 +46,9 @@ public class DBHandler {
             preparedStatement.executeUpdate();
         }catch (SQLException e) {
             e.printStackTrace();
+        }
+        finally {
+            con.close();
         }
     }
 
