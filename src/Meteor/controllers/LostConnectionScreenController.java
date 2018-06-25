@@ -2,14 +2,13 @@ package Meteor.controllers;
 
 import Meteor.Main;
 import Meteor.core.LostConnectionScene;
+
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
 import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
 
 public class LostConnectionScreenController {
 

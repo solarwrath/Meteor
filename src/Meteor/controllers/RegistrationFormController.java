@@ -3,12 +3,17 @@ package Meteor.controllers;
 import Meteor.Main;
 import Meteor.core.DBHandler;
 import Meteor.core.User;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
+
 import com.mysql.cj.exceptions.ConnectionIsClosedException;
 import com.mysql.cj.jdbc.exceptions.CommunicationsException;
+
+import org.fxmisc.easybind.EasyBind;
+
 import javafx.beans.binding.Binding;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -18,7 +23,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import org.fxmisc.easybind.EasyBind;
 
 import java.net.ConnectException;
 import java.sql.SQLException;

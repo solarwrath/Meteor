@@ -1,5 +1,6 @@
 package Meteor.controls;
 
+//TODO Get rid of this
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

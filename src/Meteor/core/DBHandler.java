@@ -2,7 +2,6 @@ package Meteor.core;
 
 import Meteor.Main;
 
-import java.lang.reflect.Array;
 import java.sql.*;
 
 public class DBHandler {
@@ -21,7 +20,7 @@ public class DBHandler {
         getConnection();
     }
 
-    //pbbly need to establish one connection per session somehow.
+    //TODO pbbly need to establish one connection per session somehow.
     private static void getConnection() throws SQLException{
         con = DriverManager.getConnection(URL, USER, PASSWORD);
     }
