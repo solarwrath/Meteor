@@ -20,6 +20,8 @@ public class Main extends Application {
     public static Scene registrationScene;
     public static Scene postRegistrationScene;
     public static LostConnectionScene lostConnectionScene;
+    public static Scene forgotPasswordScene;
+    public static Scene postForgotPasswordScene;
     public static PropertiesConfig propertiesConfig = ConfigFactory.create(PropertiesConfig.class);
 
     @Override
@@ -38,8 +40,10 @@ public class Main extends Application {
         registrationScene = new Scene(FXMLLoader.load(getClass().getResource("fxml/registrationScreen.fxml")));
         postRegistrationScene = new Scene(FXMLLoader.load(getClass().getResource("fxml/postRegistrationScreen.fxml")));
         lostConnectionScene = new LostConnectionScene(FXMLLoader.load(getClass().getResource("fxml/lostConnectionScreen.fxml")));
+        forgotPasswordScene = new Scene(FXMLLoader.load(getClass().getResource("fxml/forgotPasswordScreen.fxml")));
+        postForgotPasswordScene = new Scene(FXMLLoader.load(getClass().getResource("fxml/postForgotPasswordScreen.fxml")));
 
-        for (Scene currentScene: new ArrayList<Scene>(Arrays.asList(loginScene, registrationScene, postRegistrationScene, lostConnectionScene))) {
+        for (Scene currentScene: new ArrayList<Scene>(Arrays.asList(loginScene, registrationScene, postRegistrationScene, lostConnectionScene, forgotPasswordScene, postForgotPasswordScene))) {
             currentScene.getRoot().getAccessibleHelp();
             currentScene.getStylesheets().add(this.getClass().getResource("css/general.css").toExternalForm());
         }

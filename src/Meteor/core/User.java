@@ -4,6 +4,7 @@ import com.mysql.cj.exceptions.ConnectionIsClosedException;
 import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 
 import java.net.ConnectException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,15 +15,6 @@ public class User {
     private String email;
     private String full_name;
     private Date date;
-
-    public User(String username, String password, String email, String last_name, String gender, Date date) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.full_name = full_name;
-        this.gender = gender;
-        this.date = date;
-    }
 
     public User(String username, String password, String email, String full_name, String gender) {
         this.username = username;
@@ -46,6 +38,8 @@ public class User {
 
     public User() {
     }
+
+    //Pbbly do enums
 
     private String gender;
 
@@ -97,7 +91,7 @@ public class User {
         this.date = date;
     }
 
-    public boolean isValidUsename(String givenUsername) {
+    public static  boolean isValidUsename(String givenUsername) {
         if (givenUsername == null || givenUsername.length() < 2 || givenUsername.length() > 20 || givenUsername.trim().contains(" ")) {
             return false;
         } else {
@@ -105,7 +99,7 @@ public class User {
         }
     }
 
-    public boolean isValidPassword(String givenPassword) {
+    public static boolean isValidPassword(String givenPassword) {
         if (givenPassword == null || givenPassword.length() < 3|| givenPassword.length() > 30 || givenPassword.trim().contains(" ")) {
             return false;
         } else {
@@ -113,7 +107,7 @@ public class User {
         }
     }
 
-    public boolean isValidEmail(String givenEmail) {
+    public static boolean isValidEmail(String givenEmail) {
         if (givenEmail == null || givenEmail.length() > 64 || !java.util.regex.Pattern.compile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$").matcher(givenEmail).matches()) {
             return false;
         } else {
@@ -121,7 +115,7 @@ public class User {
         }
     }
 
-    public boolean isValidFullName(String givenFullName) {
+    public static boolean isValidFullName(String givenFullName) {
         if (givenFullName == null || givenFullName.length() > 30 || !java.util.regex.Pattern.compile("^([A-Z][a-z]*((\\s)))+[A-Z][a-z]*$").matcher(givenFullName).matches()) {
             return false;
         } else {
@@ -129,7 +123,7 @@ public class User {
         }
     }
 
-    public boolean usernameAlreadyTaken(String givenUsername){
+    public static boolean usernameAlreadyTaken(String givenUsername){
         try{
             return DBHandler.returnFromSQLQuery("SELECT * FROM students WHERE username='"+givenUsername+"'").next();
         }
@@ -139,8 +133,30 @@ public class User {
         }
     }
 
-    public boolean emailAlreadyTaken(String givenEmail) throws SQLException{
+    public static boolean emailAlreadyTaken(String givenEmail) throws SQLException{
         return DBHandler.returnFromSQLQuery("SELECT * FROM students WHERE email='"+givenEmail+"'").next();
+    }
+
+    public static String getPasswordFromEmail(String givenEmail) throws SQLException{
+        //TODO Custom Exceptions
+        ResultSet tempRS = DBHandler.returnFromSQLQuery("SELECT password FROM students WHERE email='"+givenEmail+"'");
+        if(tempRS.next()){
+            if(tempRS.getString("password").length() > 0){
+                return tempRS.getString("password");
+            };
+        }
+        return "Error";
+    }
+
+    public static String getUsernameFromEmail(String givenEmail) throws SQLException{
+        //TODO Custom Exceptions
+        ResultSet tempRS = DBHandler.returnFromSQLQuery("SELECT username FROM students WHERE email='"+givenEmail+"'");
+        if(tempRS.next()){
+            if(tempRS.getString("username").length() > 0){
+                return tempRS.getString("username");
+            };
+        }
+        return "Error";
     }
 
     public ArrayList<String> validateUser(User givenUser) throws SQLException, ConnectionIsClosedException, ConnectException, CommunicationsException {

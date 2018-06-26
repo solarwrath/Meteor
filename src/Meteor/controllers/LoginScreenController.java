@@ -38,11 +38,13 @@ public class LoginScreenController {
             System.out.println("u pressed login button");
         });*/
         createAccountButton.setOnAction(event -> {
-
             Main.changeScene(Main.registrationScene, (Stage) ((Node)event.getSource()).getScene().getWindow());
             loginScreenParent.requestFocus();
         });
         forgotPasswordButton.setOnAction(event -> {
+
+            Main.changeScene(Main.forgotPasswordScene, (Stage) ((Node)event.getSource()).getScene().getWindow());
+            loginScreenParent.requestFocus();
             
         });
     }

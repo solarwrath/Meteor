@@ -5,11 +5,13 @@ import Meteor.Main;
 import java.sql.*;
 
 public class DBHandler {
+
+    //TODO pbbly make it singleton
     // JDBC URL, username and password of MySQL server
     private static PropertiesConfig config = Main.propertiesConfig;
-    private static final String URL = config.URL();
-    private static final String USER = config.user();
-    private static final String PASSWORD = config.password();
+    private static final String URL = config.dbURL();
+    private static final String USER = config.dbUser();
+    private static final String PASSWORD = config.dbPassword();
 
     // JDBC variables for opening and managing connection
     private static Connection con;
