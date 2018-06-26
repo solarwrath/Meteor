@@ -17,7 +17,6 @@ public class PostForgotPasswordScreenController {
 
     @FXML
     void initialize(){
-        //TODO Change this to work
         continueButton.setStyle("-jfx-disable-visual-focus: true;");
         continueButton.setOnAction(event -> {
             Stage currentStage = (Stage) ((Node)event.getSource()).getScene().getWindow();

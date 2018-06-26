@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.mysql.cj.exceptions.ConnectionIsClosedException;
 import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 
+import javafx.stage.Window;
 import org.fxmisc.easybind.EasyBind;
 
 import javafx.beans.binding.Binding;
@@ -101,8 +102,8 @@ public class RegistrationFormController {
         createAccountButton.setOnAction(event -> {
 
             Binding<Boolean> bb = EasyBind.select(Main.registrationScene.getRoot().sceneProperty())
-                    .select(s -> s.windowProperty())
-                    .selectObject(w -> w.showingProperty());
+                    .select(Scene::windowProperty)
+                    .selectObject(Window::showingProperty);
 
             bb.addListener((observable, oldValue, newValue) -> {
                 try {
@@ -111,9 +112,7 @@ public class RegistrationFormController {
                             if ((Boolean) Main.registrationScene.getProperties().get("displayErrorsRequired")) {
                                 try {
                                     displayErrors(createUserFromUI());
-                                } catch (SQLException e) {
-                                    e.printStackTrace();
-                                } catch (ConnectException e) {
+                                } catch (SQLException|ConnectException e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -133,30 +132,28 @@ public class RegistrationFormController {
         });
     }
 
-    public void registerUser(Event event) {
-        HashMap<String, Object> passedParameters = new HashMap<String, Object>();
+    private void registerUser(Event event) {
+        HashMap<String, Object> passedParameters = new HashMap<>();
         passedParameters.put("event", event);
         registerUser(passedParameters);
     }
 
-    @SuppressWarnings("Duplicates")
-    public void registerUser(HashMap<String, Object> reflectedArguments) {
+    private void registerUser(HashMap<String, Object> reflectedArguments) {
         Event event = (Event) reflectedArguments.get("event");
         if (reflectedArguments.size() > 1) {
-            if(reflectedArguments.containsKey("user") && reflectedArguments.containsKey("lost_connection_stage")){
-                User givenUser = (User)reflectedArguments.get("user");
+            if (reflectedArguments.containsKey("user") && reflectedArguments.containsKey("lost_connection_stage")) {
+                User givenUser = (User) reflectedArguments.get("user");
                 try {
-                    if(givenUser.validateUser(givenUser).isEmpty()){
+                    if (givenUser.validateUser(givenUser).isEmpty()) {
                         DBHandler.addUser(givenUser);
-                        Main.changeScene(thisScene, (Stage)reflectedArguments.get("lost_connection_stage"));
+                        Main.changeScene(thisScene, (Stage) reflectedArguments.get("lost_connection_stage"));
                         ((Stage) reflectedArguments.get("lost_connection_stage")).requestFocus();
-                    }
-                    else{
+                    } else {
                         Main.registrationScene.getProperties().put("displayErrorsRequired", true);
-                        Main.changeScene(thisScene, (Stage)reflectedArguments.get("lost_connection_stage"));
+                        Main.changeScene(thisScene, (Stage) reflectedArguments.get("lost_connection_stage"));
                         ((Stage) reflectedArguments.get("lost_connection_stage")).requestFocus();
                     }
-                } catch (ConnectException|SQLException e) {
+                } catch (ConnectException | SQLException e) {
                     e.printStackTrace();
                 }
             }
@@ -165,16 +162,14 @@ public class RegistrationFormController {
             try {
                 if (givenUser.validateUser(givenUser).isEmpty()) {
                     DBHandler.addUser(givenUser);
-                    for (Node givenNode : new ArrayList<Node>(asList(loginImportantMessage, loginImportantMessageDups, loginImportantMarker, passwordImportantMarker, passwordImportantMessage, emailImportantMarker, emailImportantMessage, fullNameImportantMarker, fullNameImportantMessage))) {
+                    for (Node givenNode : new ArrayList<>(asList(loginImportantMessage, loginImportantMessageDups, loginImportantMarker, passwordImportantMarker, passwordImportantMessage, emailImportantMarker, emailImportantMessage, fullNameImportantMarker, fullNameImportantMessage))) {
                         givenNode.setVisible(false);
                     }
-                    ;
                     for (Control givenControl : new ArrayList<Control>(asList(loginField, emailField, fullNameField))) {
                         if (givenControl.getClass() == JFXTextField.class || givenControl.getClass() == JFXPasswordField.class) {
                             ((JFXTextField) givenControl).setText("");
                         }
                     }
-                    ;
                     passwordField.setText("");
                     femaleRadioButton.setSelected(false);
                     maleRadioButton.setSelected(true);
@@ -182,42 +177,18 @@ public class RegistrationFormController {
                     Main.changeScene(Main.postRegistrationScene, (Stage) ((Node) event.getSource()).getScene().getWindow());
                     registrationScreenParent.requestFocus();
                 } else {
-                   displayErrors(givenUser);
+                    displayErrors(givenUser);
                 }
             } catch (CommunicationsException e) {
                 e.printStackTrace();
-                try {
-                    Main.callLostConnectionScene(
-                            (Stage) ((Node) event.getSource()).getScene().getWindow(),
-                            getClass().getDeclaredMethod("registerUser", HashMap.class),
-                            new HashMap<String, Object>(){{
-                                put("event", event);
-                                put("user", givenUser);
-                            }},
-                            this.getClass());
-                } catch (NoSuchMethodException noSuchMethodException) {
-                    noSuchMethodException.printStackTrace();
-                }
-                registrationScreenParent.requestFocus();
+                callLostConnectionScene(event, givenUser);
             } catch (SQLException | ConnectionIsClosedException | ConnectException e) {
                 e.printStackTrace();
-                try {
-                    Main.callLostConnectionScene(
-                            (Stage) ((Node) event.getSource()).getScene().getWindow(),
-                            getClass().getDeclaredMethod("registerUser", HashMap.class),
-                            new HashMap<String, Object>(){{
-                                put("event", event);
-                                put("user", givenUser);
-                            }},
-                            this.getClass());} catch (NoSuchMethodException noSuchMethodException) {
-                    noSuchMethodException.printStackTrace();
-                }
-                registrationScreenParent.requestFocus();
             }
         }
     }
 
-    private void displayErrors(User givenUser) throws SQLException, ConnectException{
+    private void displayErrors(User givenUser) throws SQLException, ConnectException {
 
         ArrayList<String> listOfErrors = givenUser.validateUser(givenUser);
         switch (listOfErrors.get(0)) {
@@ -290,8 +261,24 @@ public class RegistrationFormController {
         }
     }
 
-    public User createUserFromUI(){
-        return new User(loginField.getText(), passwordField.getText(), emailField.getText(), fullNameField.getText(), ((JFXRadioButton) genderField.getSelectedToggle()).getText());
+    private User createUserFromUI() {
+        return new User(loginField.getText().trim(), passwordField.getText().trim(), emailField.getText().trim(), fullNameField.getText().trim(), ((JFXRadioButton) genderField.getSelectedToggle()).getText());
     }
 
+
+    private void callLostConnectionScene(Event givenEvent, User givenUser){
+        try {
+            Main.callLostConnectionScene(
+                    (Stage) ((Node) givenEvent.getSource()).getScene().getWindow(),
+                    getClass().getDeclaredMethod("registerUser", HashMap.class),
+                    new HashMap<>() {{
+                        put("event", givenEvent);
+                        put("user", givenUser);
+                    }},
+                    this.getClass());
+        } catch (NoSuchMethodException noSuchMethodException) {
+            noSuchMethodException.printStackTrace();
+        }
+        registrationScreenParent.requestFocus();
+    }
 }

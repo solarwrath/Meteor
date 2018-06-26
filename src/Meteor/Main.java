@@ -30,7 +30,7 @@ public class Main extends Application {
         //TODO Pbbly need to rewrite to wrap some functionality in the functions
         //TODO Get rid of useless imports
         //TODO More static main methods to attach listeners/bindings for example. BTW Listeners r need to be examined. They have rules and now I can't write them without IDEA
-        for(String nameOfFont : new ArrayList<String>(Arrays.asList("SemiBold", "Bold", "Regular", "Light", "Medium"))){
+        for(String nameOfFont : new ArrayList<>(Arrays.asList("SemiBold", "Bold", "Regular", "Light", "Medium"))){
             Font.loadFont(Main.class.getResource("assets/fonts/Montserrat-"+nameOfFont+".otf").toExternalForm(), 12);
         }
         primaryStage.setTitle("Meteor");
@@ -43,7 +43,7 @@ public class Main extends Application {
         forgotPasswordScene = new Scene(FXMLLoader.load(getClass().getResource("fxml/forgotPasswordScreen.fxml")));
         postForgotPasswordScene = new Scene(FXMLLoader.load(getClass().getResource("fxml/postForgotPasswordScreen.fxml")));
 
-        for (Scene currentScene: new ArrayList<Scene>(Arrays.asList(loginScene, registrationScene, postRegistrationScene, lostConnectionScene, forgotPasswordScene, postForgotPasswordScene))) {
+        for (Scene currentScene: new ArrayList<>(Arrays.asList(loginScene, registrationScene, postRegistrationScene, lostConnectionScene, forgotPasswordScene, postForgotPasswordScene))) {
             currentScene.getRoot().getAccessibleHelp();
             currentScene.getStylesheets().add(this.getClass().getResource("css/general.css").toExternalForm());
         }

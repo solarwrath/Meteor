@@ -23,19 +23,13 @@ public class LostConnectionScreenController {
 
     @FXML
     void initialize(){
-        //TODO Change this to have some actual functionality
         tryAgainButton.setOnAction(event -> {
             LostConnectionScene lostConnectionScene = (LostConnectionScene)((Node)event.getSource()).getScene();
             try {
-                lostConnectionScene.getPassedParametrs().put("lost_connection_stage", (Stage) lostConnectionScene.getWindow());
+                lostConnectionScene.getPassedParametrs().put("lost_connection_stage", lostConnectionScene.getWindow());
+                //TODO Get a way to use it without newInstance()
                 lostConnectionScene.getPassedMethod().invoke(Class.forName(lostConnectionScene.getPassedClass().getName()).newInstance(), lostConnectionScene.getPassedParametrs());
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
+            } catch (IllegalAccessException|InvocationTargetException|ClassNotFoundException|InstantiationException e) {
                 e.printStackTrace();
             }
         });

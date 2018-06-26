@@ -92,35 +92,19 @@ public class User {
     }
 
     public static  boolean isValidUsename(String givenUsername) {
-        if (givenUsername == null || givenUsername.length() < 2 || givenUsername.length() > 20 || givenUsername.trim().contains(" ")) {
-            return false;
-        } else {
-            return true;
-        }
+        return givenUsername != null && givenUsername.length() >= 2 && givenUsername.length() <= 20 && !givenUsername.trim().contains(" ");
     }
 
     public static boolean isValidPassword(String givenPassword) {
-        if (givenPassword == null || givenPassword.length() < 3|| givenPassword.length() > 30 || givenPassword.trim().contains(" ")) {
-            return false;
-        } else {
-            return true;
-        }
+        return givenPassword != null && givenPassword.length() >= 3 && givenPassword.length() <= 30 && !givenPassword.trim().contains(" ");
     }
 
     public static boolean isValidEmail(String givenEmail) {
-        if (givenEmail == null || givenEmail.length() > 64 || !java.util.regex.Pattern.compile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$").matcher(givenEmail).matches()) {
-            return false;
-        } else {
-            return true;
-        }
+        return givenEmail != null && givenEmail.length() <= 64 && java.util.regex.Pattern.compile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$").matcher(givenEmail).matches();
     }
 
     public static boolean isValidFullName(String givenFullName) {
-        if (givenFullName == null || givenFullName.length() > 30 || !java.util.regex.Pattern.compile("^([A-Z][a-z]*((\\s)))+[A-Z][a-z]*$").matcher(givenFullName).matches()) {
-            return false;
-        } else {
-            return true;
-        }
+        return givenFullName != null && givenFullName.length() <= 30 && java.util.regex.Pattern.compile("^([A-Z][a-z]*((\\s)))+[A-Z][a-z]*$").matcher(givenFullName).matches();
     }
 
     public static boolean usernameAlreadyTaken(String givenUsername){
@@ -143,7 +127,7 @@ public class User {
         if(tempRS.next()){
             if(tempRS.getString("password").length() > 0){
                 return tempRS.getString("password");
-            };
+            }
         }
         return "Error";
     }
@@ -154,12 +138,12 @@ public class User {
         if(tempRS.next()){
             if(tempRS.getString("username").length() > 0){
                 return tempRS.getString("username");
-            };
+            }
         }
         return "Error";
     }
 
-    public ArrayList<String> validateUser(User givenUser) throws SQLException, ConnectionIsClosedException, ConnectException, CommunicationsException {
+    public ArrayList<String> validateUser(User givenUser) throws SQLException, ConnectionIsClosedException, ConnectException{
         ArrayList<String> listOfErrors = new ArrayList<>();
         if(!isValidUsename(givenUser.getUsername())){
             listOfErrors.add("username");

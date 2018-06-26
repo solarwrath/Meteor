@@ -19,11 +19,6 @@ public class MailHandler {
         //Config and necessary variables declaration
 
         PropertiesConfig config = ConfigFactory.create(PropertiesConfig.class);
-        final String from = config.mailFrom();
-        final String username = "meteor.com.dev";
-        final String password = "71f46fec";
-
-        final String host = "smtp.gmail.com";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", config.mailAuth());
