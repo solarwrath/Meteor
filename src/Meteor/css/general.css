@@ -1,0 +1,236 @@
+/*
+            FONTS
+ */
+
+@font-face {
+    font-family: 'Montserrat Regular';
+    src: url('../assets/fonts/Montserrat-Regular.otf');
+}
+
+@font-face {
+    font-family: 'Montserrat SemiBold';
+    src: url('../assets/fonts/Montserrat-SemiBold.otf');
+}
+
+@font-face {
+    font-family: 'Montserrat Bold';
+    src: url('../assets/fonts/Montserrat-Bold.otf');
+}
+
+/*
+            TITLE
+*/
+.title{
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-size: 28px;
+}
+
+    .title--blue{
+        -fx-text-fill: #328EFC;
+    }
+
+    .title--bright-violet{
+        -fx-text-fill: #9944FF;
+    }
+
+    .title--dark-violet{
+        -fx-text-fill: #1B1050;
+    }
+
+    .title--magenta{
+        -fx-text-fill: #B60C73;
+    }
+
+    .title--white{
+        -fx-text-fill: #f3f3f3;
+    }
+
+/*
+            RADIO BUTTONS
+*/
+.radio-button{
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-size: 16px;
+    -fx-text-fill: #f3f3f3;
+}
+
+    .radio-button--blue{
+        -jfx-selected-color: #328EFC;
+        -jfx-unselected-color: #328EFC;
+    }
+
+    .radio-button--bright-violet{
+        -jfx-selected-color: #9944FF;
+        -jfx-unselected-color: #9944FF;
+    }
+
+    .radio-button--dark-violet{
+        -jfx-selected-color: #1B1050;
+        -jfx-unselected-color: #1B1050;
+    }
+
+    .radio-button--magenta{
+        -jfx-selected-color: #B60C73;
+        -jfx-unselected-color: #B60C73;
+    }
+
+    .radio-button--white{
+        -jfx-selected-color: #f3f3f3;
+        -jfx-unselected-color: #f3f3f3;
+    }
+
+/*
+            LOGIN FORM
+ */
+.default-background{
+    -fx-background-image: url("../assets/background.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+.no-focus:focused{
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+
+/*
+            BUTTONS
+ */
+
+.button {
+    -fx-pref-width: 256px;
+    -fx-pref-height: 36px;
+    -fx-border-radius: 6px;
+    -fx-text-fill: #f3f3f3;
+    -fx-font-family: "Montserrat Bold";
+    -fx-font-size: 10px;
+    -fx-background-color: TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT;
+    -fx-background-radius: 3px;
+    -fx-background-insets: 0px;
+}
+
+/*
+
+*/
+.important__text{
+    -fx-background-color: #9944FF;
+    -fx-padding: 10px;
+    -fx-background-radius: 4px;
+    -fx-font-family: "Montserrat Regular";
+    -fx-text-fill: #f3f3f3;
+}
+/*
+           PRIMARY BUTTONS
+*/
+
+.button__primary--blue {
+    -fx-background-color: #328EFC;
+}
+
+.button__primary--bright-violet {
+    -fx-background-color: #9944FF;
+}
+
+.button__primary--dark-violet {
+    -fx-background-color: #1B1050;
+}
+
+.button__primary--magenta {
+    -fx-background-color: #B60C73;
+}
+
+/*
+            TERTIARY BUTTONS
+*/
+
+.button__tertiary {
+
+}
+
+/*
+            TEXT FIELDS
+ */
+
+
+.text-field {
+    -fx-pref-width: 256px;
+    -fx-pref-height: 36px;
+    -fx-border-radius: 6px;
+    -fx-border-width: 1px;
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-size: 10px;
+    -fx-text-fill: #f3f3f3;
+    -fx-prompt-text-fill: #f3f3f3;
+    -jfx-unfocus-color: transparent;
+    -jfx-focus-color: transparent;
+
+}
+    .text-field--label {
+        -fx-font-family: "Montserrat SemiBold";
+        -fx-font-size: 16px;
+        -fx-text-fill: #f3f3f3;
+    }
+
+    .text-field--blue {
+        -fx-background-color: #328EFC;
+        -fx-border-color: #6FB0FD;
+    }
+
+    .text-field--bright-violet {
+        -fx-background-color: #9944FF;
+        -fx-border-color: #B77CFF;
+    }
+
+    .text-field--dark-violet {
+        -fx-background-color: #1B1050;
+        -fx-border-color: #5F5784;
+    }
+
+    .text-field--magenta {
+        -fx-background-color: #B60C73;
+        -fx-border-color: #CC549D;
+    }
+
+/*
+            PASSWORD FIELD
+ */
+
+
+.password-field {
+    -fx-pref-width: 256px;
+    -fx-pref-height: 36px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-border-width: 1px;
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-size: 10px;
+    -fx-text-fill: #f3f3f3;
+    -jfx-unfocus-color: transparent;
+    -jfx-focus-color: transparent;
+}
+
+    .password-field--label {
+        -fx-font-family: "Montserrat SemiBold";
+        -fx-font-size: 16px;
+        -fx-text-fill: #f3f3f3;
+    }
+
+    .password-field--blue {
+        -fx-background-color: #328EFC;
+        -fx-border-color: #6FB0FD;
+    }
+
+    .password-field--bright-violet {
+        -fx-background-color: #9944FF;
+        -fx-border-color: #B77CFF;
+    }
+
+    .password-field--dark-violet {
+        -fx-background-color: #1B1050;
+        -fx-border-color: #5F5784;
+    }
+
+    .password-field--magenta {
+        -fx-background-color: #B60C73;
+        -fx-border-color: #CC549D;
+    }
