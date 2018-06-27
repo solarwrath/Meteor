@@ -7,6 +7,7 @@ import java.sql.*;
 public class DBHandler {
 
     //TODO pbbly make it singleton
+    // JDBC URL, username and password of MySQL server
     private static PropertiesConfig config = Main.propertiesConfig;
     private static final String URL = config.dbURL();
     private static final String USER = config.dbUser();
@@ -14,22 +15,22 @@ public class DBHandler {
 
     private static Connection con;
 
-    public DBHandler() throws SQLException{
+    public DBHandler() throws SQLException {
         getConnection();
     }
 
     //TODO pbbly need to establish one connection per session somehow.
-    private static void getConnection() throws SQLException{
+    private static void getConnection() throws SQLException {
         con = DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
-    public static void addUser(User givenUser) throws SQLException{
+    public static void addUser(User givenUser) throws SQLException {
         getConnection();
         String givenUsername = givenUser.getUsername();
         String givenPassword = givenUser.getPassword();
         String givenEmail = givenUser.getEmail();
         String givenFullName = givenUser.getFullName();
-        String givenGender = givenUser.getGender();
+        String givenGender = givenUser.getGender().getGenderToString();
         Date currentDate = new Date(new java.util.Date().getTime());
         String sqlToExecute = "INSERT INTO students (username, password, email, full_name, gender, date_added)\n" +
                 "VALUES (?, ?, ?, ?, ?, ?); ";
@@ -41,15 +42,14 @@ public class DBHandler {
             preparedStatement.setString(5, givenGender);
             preparedStatement.setDate(6, currentDate);
             preparedStatement.executeUpdate();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             con.close();
         }
     }
 
-    public static ResultSet returnFromSQLQuery(String givenSQLString) throws SQLException{
+    public static ResultSet returnFromSQLQuery(String givenSQLString) throws SQLException {
         getConnection();
         return con.prepareStatement(givenSQLString).executeQuery();
     }

@@ -5,7 +5,10 @@ import Meteor.core.MailHandler;
 import Meteor.core.User;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import javafx.application.Platform;
 import javafx.beans.binding.Binding;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -48,6 +51,8 @@ public class ForgotPasswordFormController {
     @FXML
     private Label emailImportantMessageNotFound;
 
+    private Service<Void> backgroundRegistrationThread;
+
     @FXML
     public void initialize() {
         sendMessageButton.setOnAction(event -> {
@@ -70,8 +75,7 @@ public class ForgotPasswordFormController {
                             }
                         }
                     }
-                }
-                catch (NullPointerException e){
+                } catch (NullPointerException e) {
                     //System.out.println(e);
                 }
             });
@@ -91,79 +95,98 @@ public class ForgotPasswordFormController {
     }
 
     private void sendForgotMessage(HashMap<String, Object> reflectedArguments) {
-        Event event = (Event) reflectedArguments.get("event");
-        if (reflectedArguments.size() > 1) {
-            if (reflectedArguments.containsKey("email") && reflectedArguments.containsKey("lost_connection_stage")) {
-                String givenEmail = (String) reflectedArguments.get("email");
-                try {
-                    if (validateGivenEmail(givenEmail).isEmpty()) {
-                        MailHandler mailHandler = new MailHandler();
-                        try {
-                            mailHandler.sendEmailTest(
-                                    givenEmail,
-                                    "Retrieving access to your Meteor account",
-                                    "This is placeholder for now. I will change it later after the beginning of using servers.\n" +
-                                            "For now your creds are:\n" +
-                                            "Login: " + User.getUsernameFromEmail(givenEmail) + "\n" +
-                                            "Password: " + User.getPasswordFromEmail(givenEmail) + "\n\n" +
-                                            "Meteor Dev Team"
-                            );
+        backgroundRegistrationThread = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        Event event = (Event) reflectedArguments.get("event");
+                        if (reflectedArguments.size() > 1) {
+                            if (reflectedArguments.containsKey("email") && reflectedArguments.containsKey("lost_connection_stage")) {
+                                String givenEmail = (String) reflectedArguments.get("email");
+                                try {
+                                    if (validateGivenEmail(givenEmail).isEmpty()) {
+                                        MailHandler mailHandler = new MailHandler();
+                                        try {
+                                            mailHandler.sendEmailTest(
+                                                    givenEmail,
+                                                    "Retrieving access to your Meteor account",
+                                                    "This is placeholder for now. I will change it later after the beginning of using servers.\n" +
+                                                            "For now your creds are:\n" +
+                                                            "Login: " + User.getUsernameFromEmail(givenEmail) + "\n" +
+                                                            "Password: " + User.getPasswordFromEmail(givenEmail) + "\n\n" +
+                                                            "Meteor Dev Team"
+                                            );
+                                            Platform.runLater(() -> {
+                                                Main.changeScene(Main.postForgotPasswordScene, (Stage) reflectedArguments.get("lost_connection_stage"));
+                                                ((Stage) reflectedArguments.get("lost_connection_stage")).requestFocus();
+                                            });
 
-                            Main.changeScene(Main.postForgotPasswordScene, (Stage) reflectedArguments.get("lost_connection_stage"));
-                            ((Stage) reflectedArguments.get("lost_connection_stage")).requestFocus();
+                                        } catch (SQLException e) {
+                                            e.printStackTrace();
+                                            callLostConnectionScene(event, givenEmail);
+                                        }
+                                    } else {
+                                        Platform.runLater(() -> {
+                                            Main.forgotPasswordScene.getProperties().put("displayErrorsRequired", true);
 
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                            callLostConnectionScene(event, givenEmail);
+                                            Main.changeScene(thisScene, (Stage) reflectedArguments.get("lost_connection_stage"));
+                                            ((Stage) reflectedArguments.get("lost_connection_stage")).requestFocus();
+                                        });
+                                    }
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                    callLostConnectionScene(event, givenEmail);
+                                }
+                            }
+                        } else {
+                            String givenEmail = emailField.getText().trim();
+                            try {
+                                ArrayList<String> listOfErrors = validateGivenEmail(givenEmail);
+                                if (listOfErrors.isEmpty()) {
+                                    for (Node currentNode : new ArrayList<>(asList(emailImportantMarker, emailImportantMessage, emailImportantMessageNotFound))) {
+                                        currentNode.setVisible(false);
+                                    }
+                                    MailHandler mailHandler = new MailHandler();
+                                    try {
+                                        mailHandler.sendEmailTest(
+                                                givenEmail,
+                                                "Retrieving access to your Meteor account",
+                                                "This is placeholder for now. I will change it later after the beginning of using servers.\n" +
+                                                        "For now your creds are:\n" +
+                                                        "Login: " + User.getUsernameFromEmail(givenEmail) + "\n" +
+                                                        "Password: " + User.getPasswordFromEmail(givenEmail) + "\n\n" +
+                                                        "Meteor Dev Team"
+                                        );
+
+                                        Platform.runLater(() -> {
+                                            emailField.setText("");
+                                            Main.changeScene(Main.postForgotPasswordScene, (Stage) ((Node) event.getSource()).getScene().getWindow());
+                                            forgotPasswordFormParent.requestFocus();
+                                        });
+
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                        callLostConnectionScene(event, givenEmail);
+                                    }
+                                } else {
+                                    displayErrors(listOfErrors);
+                                }
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                                callLostConnectionScene(event, givenEmail);
+                            }
                         }
-                    } else {
-                        Main.forgotPasswordScene.getProperties().put("displayErrorsRequired", true);
-                        Main.changeScene(thisScene, (Stage) reflectedArguments.get("lost_connection_stage"));
-                        ((Stage) reflectedArguments.get("lost_connection_stage")).requestFocus();
+                        return null;
                     }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    callLostConnectionScene(event, givenEmail);
-                }
+                };
             }
-        } else {
-            String givenEmail = emailField.getText().trim();
-            try {
-                ArrayList<String> listOfErrors = validateGivenEmail(givenEmail);
-                if (listOfErrors.isEmpty()) {
-                    for (Node currentNode : new ArrayList<>(asList(emailImportantMarker, emailImportantMessage, emailImportantMessageNotFound))) {
-                        currentNode.setVisible(false);
-                    }
-                    MailHandler mailHandler = new MailHandler();
-                    try {
-                        mailHandler.sendEmailTest(
-                                givenEmail,
-                                "Retrieving access to your Meteor account",
-                                "This is placeholder for now. I will change it later after the beginning of using servers.\n" +
-                                        "For now your creds are:\n" +
-                                        "Login: " + User.getUsernameFromEmail(givenEmail) + "\n" +
-                                        "Password: " + User.getPasswordFromEmail(givenEmail) + "\n\n" +
-                                        "Meteor Dev Team"
-                        );
+        };
 
-                        emailField.setText("");
-
-                        Main.changeScene(Main.postForgotPasswordScene, (Stage) ((Node) event.getSource()).getScene().getWindow());
-                        forgotPasswordFormParent.requestFocus();
-
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                        callLostConnectionScene(event, givenEmail);
-                    }
-                } else {
-                    displayErrors(listOfErrors);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                callLostConnectionScene(event, givenEmail);
-            }
-        }
+        backgroundRegistrationThread.restart();
     }
+
 
     private ArrayList<String> validateGivenEmail(String givenEmail) throws SQLException {
         ArrayList<String> listOfErrors = new ArrayList<>();
@@ -191,20 +214,23 @@ public class ForgotPasswordFormController {
         }
     }
 
-    private void callLostConnectionScene(Event givenEvent, String givenEmail){
-        try {
-            Main.callLostConnectionScene(
-                    (Stage) ((Node) givenEvent.getSource()).getScene().getWindow(),
-                    getClass().getDeclaredMethod("sendForgotMessage", HashMap.class),
-                    new HashMap<>() {{
-                        put("event", givenEvent);
-                        put("email", givenEmail);
-                    }},
-                    this.getClass());
-        } catch (NoSuchMethodException noSuchMethodException) {
-            noSuchMethodException.printStackTrace();
-        }
-        forgotPasswordFormParent.requestFocus();
+    private void callLostConnectionScene(Event givenEvent, String givenEmail) {
+
+        Platform.runLater(() -> {
+            try {
+                Main.callLostConnectionScene(
+                        (Stage) ((Node) givenEvent.getSource()).getScene().getWindow(),
+                        getClass().getDeclaredMethod("sendForgotMessage", HashMap.class),
+                        new HashMap<>() {{
+                            put("event", givenEvent);
+                            put("email", givenEmail);
+                        }},
+                        this.getClass());
+            } catch (NoSuchMethodException noSuchMethodException) {
+                noSuchMethodException.printStackTrace();
+            }
+            forgotPasswordFormParent.requestFocus();
+        });
     }
 
 }

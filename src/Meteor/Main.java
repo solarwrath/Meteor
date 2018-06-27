@@ -24,6 +24,7 @@ public class Main extends Application {
     public static Scene postForgotPasswordScene;
     public static PropertiesConfig propertiesConfig = ConfigFactory.create(PropertiesConfig.class);
 
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         //TODO Need to go deeper and read more about all this stuff

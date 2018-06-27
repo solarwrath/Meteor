@@ -1,7 +1,6 @@
 package Meteor.core;
 
 import com.mysql.cj.exceptions.ConnectionIsClosedException;
-import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 
 import java.net.ConnectException;
 import java.sql.ResultSet;
@@ -15,8 +14,18 @@ public class User {
     private String email;
     private String full_name;
     private Date date;
+    private Gender gender;
 
-    public User(String username, String password, String email, String full_name, String gender) {
+    public enum Gender{
+        MALE("Male"), FEMALE("Female");
+        private String gender;
+        Gender(String gender){
+            this.gender = gender;
+        }
+        public String getGenderToString(){ return gender;}
+    }
+
+    public User(String username, String password, String email, String full_name, Gender gender) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -39,9 +48,6 @@ public class User {
     public User() {
     }
 
-    //Pbbly do enums
-
-    private String gender;
 
     public String getUsername() {
         return username;
@@ -75,11 +81,11 @@ public class User {
         this.full_name = full_name;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -91,7 +97,7 @@ public class User {
         this.date = date;
     }
 
-    public static  boolean isValidUsename(String givenUsername) {
+    public static boolean isValidUsename(String givenUsername) {
         return givenUsername != null && givenUsername.length() >= 2 && givenUsername.length() <= 20 && !givenUsername.trim().contains(" ");
     }
 
@@ -107,60 +113,59 @@ public class User {
         return givenFullName != null && givenFullName.length() <= 30 && java.util.regex.Pattern.compile("^([A-Z][a-z]*((\\s)))+[A-Z][a-z]*$").matcher(givenFullName).matches();
     }
 
-    public static boolean usernameAlreadyTaken(String givenUsername){
-        try{
-            return DBHandler.returnFromSQLQuery("SELECT * FROM students WHERE username='"+givenUsername+"'").next();
-        }
-        catch (SQLException e){
+    public static boolean usernameAlreadyTaken(String givenUsername) {
+        try {
+            return DBHandler.returnFromSQLQuery("SELECT * FROM students WHERE username='" + givenUsername + "'").next();
+        } catch (SQLException e) {
             e.printStackTrace();
             return true;
         }
     }
 
-    public static boolean emailAlreadyTaken(String givenEmail) throws SQLException{
-        return DBHandler.returnFromSQLQuery("SELECT * FROM students WHERE email='"+givenEmail+"'").next();
+    public static boolean emailAlreadyTaken(String givenEmail) throws SQLException {
+        return DBHandler.returnFromSQLQuery("SELECT * FROM students WHERE email='" + givenEmail + "'").next();
     }
 
-    public static String getPasswordFromEmail(String givenEmail) throws SQLException{
+    public static String getPasswordFromEmail(String givenEmail) throws SQLException {
         //TODO Custom Exceptions
-        ResultSet tempRS = DBHandler.returnFromSQLQuery("SELECT password FROM students WHERE email='"+givenEmail+"'");
-        if(tempRS.next()){
-            if(tempRS.getString("password").length() > 0){
+        ResultSet tempRS = DBHandler.returnFromSQLQuery("SELECT password FROM students WHERE email='" + givenEmail + "'");
+        if (tempRS.next()) {
+            if (tempRS.getString("password").length() > 0) {
                 return tempRS.getString("password");
             }
         }
         return "Error";
     }
 
-    public static String getUsernameFromEmail(String givenEmail) throws SQLException{
+    public static String getUsernameFromEmail(String givenEmail) throws SQLException {
         //TODO Custom Exceptions
-        ResultSet tempRS = DBHandler.returnFromSQLQuery("SELECT username FROM students WHERE email='"+givenEmail+"'");
-        if(tempRS.next()){
-            if(tempRS.getString("username").length() > 0){
+        ResultSet tempRS = DBHandler.returnFromSQLQuery("SELECT username FROM students WHERE email='" + givenEmail + "'");
+        if (tempRS.next()) {
+            if (tempRS.getString("username").length() > 0) {
                 return tempRS.getString("username");
             }
         }
         return "Error";
     }
 
-    public ArrayList<String> validateUser(User givenUser) throws SQLException, ConnectionIsClosedException, ConnectException{
+    public ArrayList<String> validateUser(User givenUser) throws SQLException, ConnectionIsClosedException, ConnectException {
         ArrayList<String> listOfErrors = new ArrayList<>();
-        if(!isValidUsename(givenUser.getUsername())){
+        if (!isValidUsename(givenUser.getUsername())) {
             listOfErrors.add("username");
         }
-        if(!isValidPassword(givenUser.getPassword())){
+        if (!isValidPassword(givenUser.getPassword())) {
             listOfErrors.add("password");
         }
-        if(!isValidEmail(givenUser.getEmail())){
+        if (!isValidEmail(givenUser.getEmail())) {
             listOfErrors.add("email");
         }
-        if(!isValidFullName(givenUser.getFullName())){
+        if (!isValidFullName(givenUser.getFullName())) {
             listOfErrors.add("full_name");
         }
-        if(usernameAlreadyTaken(givenUser.getUsername())){
+        if (usernameAlreadyTaken(givenUser.getUsername())) {
             listOfErrors.add("username_already_taken");
         }
-        if(emailAlreadyTaken(givenUser.getEmail())){
+        if (emailAlreadyTaken(givenUser.getEmail())) {
             listOfErrors.add("email_already_taken");
         }
         return listOfErrors;
