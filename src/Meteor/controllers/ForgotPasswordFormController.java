@@ -51,7 +51,7 @@ public class ForgotPasswordFormController {
     @FXML
     private Label emailImportantMessageNotFound;
 
-    private Service<Void> backgroundRegistrationThread;
+    private boolean executed = false;
 
     @FXML
     public void initialize() {
@@ -95,10 +95,10 @@ public class ForgotPasswordFormController {
     }
 
     private void sendForgotMessage(HashMap<String, Object> reflectedArguments) {
-        backgroundRegistrationThread = new Service<Void>() {
+        Service<Void> backgroundRegistrationThread = new Service<>() {
             @Override
             protected Task<Void> createTask() {
-                return new Task<Void>() {
+                return new Task<>() {
                     @Override
                     protected Void call() throws Exception {
                         Event event = (Event) reflectedArguments.get("event");
@@ -184,7 +184,11 @@ public class ForgotPasswordFormController {
             }
         };
 
-        backgroundRegistrationThread.restart();
+        if(!executed){
+            backgroundRegistrationThread.start();
+            executed = true;
+        }
+
     }
 
 

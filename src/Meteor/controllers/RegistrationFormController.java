@@ -104,6 +104,8 @@ public class RegistrationFormController implements Initializable {
 
     private Service<Void> backgroundRegistrationThread;
 
+    private boolean executed = false;
+
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
         createAccountButton.setOnAction(event -> {
@@ -146,7 +148,6 @@ public class RegistrationFormController implements Initializable {
     }
 
     private void registerUser(HashMap<String, Object> reflectedArguments) {
-
         backgroundRegistrationThread = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
@@ -212,11 +213,13 @@ public class RegistrationFormController implements Initializable {
                         return null;
                     }
                 };
-
             }
         };
 
-        backgroundRegistrationThread.restart();
+        if (!executed) {
+            backgroundRegistrationThread.start();
+            executed = true;
+        }
     }
 
     private void displayErrors(User givenUser) throws SQLException, ConnectException {
@@ -310,7 +313,7 @@ public class RegistrationFormController implements Initializable {
 
 
     private void callLostConnectionScene(Event givenEvent, User givenUser) {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             try {
                 Main.callLostConnectionScene(
                         (Stage) ((Node) givenEvent.getSource()).getScene().getWindow(),
