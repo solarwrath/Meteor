@@ -118,8 +118,8 @@ public class LoginScreenController {
                                 try {
                                     Main.currentUser = User.returnLoginnedUser(givenUsername, givenPassword);
                                     Platform.runLater(() -> {
-                                        System.out.println("success from lost screen");
                                         Main.changeScene(Main.dashboardMainScene, (Stage) reflectedArguments.get("lost_connection_stage"));
+                                        Main.resetWindowCoords();
                                         ((Stage) reflectedArguments.get("lost_connection_stage")).requestFocus();
                                     });
                                 } catch (SQLException | ConnectException e) {
@@ -140,6 +140,7 @@ public class LoginScreenController {
                                 Main.currentUser = User.returnLoginnedUser(givenUsername, givenPassword);
                                 Platform.runLater(() -> {
                                     Main.changeScene(Main.dashboardMainScene, (Stage) ((Node) event.getSource()).getScene().getWindow());
+                                    Main.resetWindowCoords();
                                     loginScreenParent.requestFocus();
                                 });
 

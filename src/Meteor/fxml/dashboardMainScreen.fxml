@@ -2,45 +2,119 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
 
 <GridPane alignment="center" hgap="10" stylesheets="@../css/general.css" vgap="10" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Meteor.controllers.dashboardMainScreenController">
+    <AnchorPane fx:id="dashboardMainScreenParent" prefHeight="1080.0" prefWidth="1920.0" styleClass="dashboard-main-pp">
+        <Label layoutX="401.0" layoutY="375.0" text="Loggined!">
+            <styleClass>
+                <String fx:value="title" />
+                <String fx:value="title--white" />
+            </styleClass>
+        </Label>
+      <VBox fx:id="dashboardMenu" prefHeight="1080.0" prefWidth="256.0" styleClass="dashboard__menu">
+         <children>
+              <ImageView fx:id="dashboardLogo" fitHeight="73.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" x="50.0" y="50.0" VBox.vgrow="SOMETIMES">
+                  <Image url="@../assets/logo.png" />
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+               <VBox.margin>
+                  <Insets bottom="14.0" left="66.0" top="14.0" />
+               </VBox.margin>
+              </ImageView>
+            <Rectangle height="4.0" stroke="BLACK" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" styleClass="dashboard__separator" width="256.0">
+               <fill>
+                  <LinearGradient endX="1.0" startY="1.0">
+                     <stops>
+                        <Stop color="#390e57" />
+                        <Stop color="#371364" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </fill>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Rectangle>
+            <HBox fillHeight="false" maxHeight="64.0" maxWidth="64.0" prefHeight="64.0" prefWidth="64.0" styleClass="dashboard__avatar" VBox.vgrow="NEVER">
+               <children>
+                  <ImageView fx:id="dashboardAvatarImage" fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/placeholder_avatar.jpg" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+               <VBox.margin>
+                  <Insets left="94.0" top="30.0" />
+               </VBox.margin>
+            </HBox>
+            <Label fx:id="dashboardAvatarName" alignment="CENTER" prefWidth="256.0" text="Bjorn Lastborn">
+               <styleClass>
+                  <String fx:value="h2" />
+                  <String fx:value="h2--white" />
+               </styleClass>
+               <VBox.margin>
+                  <Insets top="7.0" />
+               </VBox.margin>
+            </Label>
+            <HBox fx:id="dashboardMainMenuHome" prefHeight="40.0" prefWidth="256.0">
+               <children>
+                  <ImageView pickOnBounds="true" preserveRatio="true" styleClass="dashboard__menu__item__icon">
+                     <image>
+                        <Image url="@../assets/fa-icons/home.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="36.0" top="15.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label styleClass="dashboard__menu__item__label" text="Home">
+                     <HBox.margin>
+                        <Insets left="36.0" top="15.0" />
+                     </HBox.margin></Label>
+               </children>
+               <styleClass>
+                  <String fx:value="dashboard__menu__item" />
+                  <String fx:value="dashboard__menu__item--active" />
+               </styleClass>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+         </children></VBox>
+        <AnchorPane layoutX="434.0" layoutY="434.0" minHeight="36.0" minWidth="256.0" prefHeight="36.0" prefWidth="256.0">
+            <JFXButton fx:id="continueButton" prefHeight="36.0" prefWidth="256.0" text="CONTINUE">
+                <styleClass>
+                    <String fx:value="button" />
+                    <String fx:value="button__primary--magenta" />
+                    <String fx:value="no-focus" />
+                </styleClass>
+            </JFXButton>
+        </AnchorPane>
+    </AnchorPane>
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints />
    </rowConstraints>
-   <children>
-      <AnchorPane fx:id="dashBoardMainScreenParent" prefHeight="750.0" prefWidth="1125.0" styleClass="default-background">
-         <children>
-            <ImageView fitHeight="113.0" fitWidth="561.0" layoutX="467.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../assets/logo.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="401.0" layoutY="375.0" text="Loggined!">
-               <styleClass>
-                  <String fx:value="title" />
-                  <String fx:value="title--white" />
-               </styleClass>
-            </Label>
-            <AnchorPane layoutX="434.0" layoutY="434.0" minHeight="36.0" minWidth="256.0" prefHeight="36.0" prefWidth="256.0">
-                  <JFXButton fx:id="continueButton" prefHeight="36.0" prefWidth="256.0" text="CONTINUE">
-                     <styleClass>
-                        <String fx:value="button" />
-                        <String fx:value="button__primary--magenta" />
-                        <String fx:value="no-focus" />
-                     </styleClass>
-                  </JFXButton>
-            </AnchorPane>
-         </children>
-      </AnchorPane>
-   </children>
 </GridPane>

@@ -27,12 +27,11 @@ public class Main extends Application {
     public static PropertiesConfig propertiesConfig = ConfigFactory.create(PropertiesConfig.class);
 
     public static User currentUser = new User();
+    public static Stage globalStage;
 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //TODO Need to go deeper and read more about all this stuff
-        //TODO Pbbly need to rewrite to wrap some functionality in the functions
         for (String nameOfFont : new ArrayList<>(Arrays.asList("SemiBold", "Bold", "Regular", "Light", "Medium"))) {
             Font.loadFont(Main.class.getResource("assets/fonts/Montserrat-" + nameOfFont + ".otf").toExternalForm(), 12);
         }
@@ -54,6 +53,7 @@ public class Main extends Application {
 
         primaryStage.setScene(loginScene);
         primaryStage.show();
+        globalStage = primaryStage;
     }
 
     public static void changeScene(Scene givenScene, Stage currentStage) {
@@ -66,6 +66,11 @@ public class Main extends Application {
         lostConnectionScene.setPassedParametrs(givenParameters);
         lostConnectionScene.setPassedClass(givenClass);
         changeScene(lostConnectionScene, givenStage);
+    }
+
+    public static void resetWindowCoords(){
+        globalStage.setX(0);
+        globalStage.setY(0);
     }
 
     public static void main(String[] args) {
