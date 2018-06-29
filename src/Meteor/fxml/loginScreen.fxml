@@ -10,73 +10,57 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 
 <GridPane alignment="center" hgap="10" stylesheets="@../css/general.css" vgap="10" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Meteor.controllers.LoginScreenController">
-   <columnConstraints>
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-   </rowConstraints>
-   <children>
-      <AnchorPane fx:id="loginScreenParent" id="loginFormBackground" prefHeight="750.0" prefWidth="1125.0" styleClass="default-background">
-         <children>
-            <ImageView fitHeight="113.0" fitWidth="561.0" layoutX="467.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../assets/logo.png" />
-               </image>
-            </ImageView>
+        <AnchorPane id="loginFormBackground" fx:id="loginScreenParent" prefHeight="750.0" prefWidth="1125.0" styleClass="default-background">
+                <ImageView fitHeight="113.0" fitWidth="561.0" layoutX="467.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../assets/logo.png" />
+                </ImageView>
+                <ImageView fx:id="notFoundImportantMarker" fitHeight="24.0" fitWidth="24.0" layoutX="711.0" layoutY="373.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                        <Image url="@../assets/important__marker.png" />
+                </ImageView>
+                <Label fx:id="notFoundImportantMessage" layoutX="755.0" layoutY="367.0" styleClass="important__text" text="Incorrect login or password!&#10;" visible="false" />
 
-            <AnchorPane layoutX="435.0" layoutY="345.0" minHeight="60.0" minWidth="256.0" prefHeight="60.0" prefWidth="256.0">
-               <children>
-                  <JFXTextField fx:id="loginField" layoutY="22.0" prefHeight="36.0" prefWidth="256.0" styleClass="text-field--magenta">
-                     <padding>
-                        <Insets left="8.0" />
-                     </padding>
-                  </JFXTextField>
-                  <Label styleClass="text-field--label" text="Login" />
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutX="435.0" layoutY="413.0" minHeight="60.0" minWidth="256.0" prefHeight="60.0" prefWidth="256.0">
-               <children>
-                  <Label styleClass="password-field--label" text="Password" />
-                  <JFXPasswordField fx:id="passwordField" layoutY="22.0" prefHeight="36.0" prefWidth="256.0" styleClass="password-field--magenta">
-                     <padding>
-                        <Insets left="8.0" />
-                     </padding>
-                  </JFXPasswordField>
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutX="460.0" layoutY="595.0" minHeight="36.0" minWidth="256.0" prefHeight="36.0" prefWidth="256.0" />
-            <JFXButton fx:id="signInButton" layoutX="435.0" layoutY="524.0" prefHeight="36.0" prefWidth="256.0" text="SIGN IN">
-               <styleClass>
-                  <String fx:value="button" />
-                  <String fx:value="button__primary--blue" />
-               </styleClass>
-            </JFXButton>
-            <JFXButton fx:id="createAccountButton" layoutX="435.0" layoutY="568.0" prefHeight="36.0" prefWidth="256.0" text="CREATE ACCOUNT">
-               <styleClass>
-                  <String fx:value="button" />
-                  <String fx:value="button__primary--magenta" />
-               </styleClass>
-               <effect>
-                  <Glow />
-               </effect>
-            </JFXButton>
-
-            <AnchorPane layoutX="435.0" layoutY="616.0" minHeight="36.0" minWidth="256.0" prefHeight="36.0" prefWidth="256.0">
-               <children>
-                  <JFXButton fx:id="forgotPasswordButton" text="FORGOT PASSWORD">
-                     <styleClass>
-                        <String fx:value="button__tertiary" />
+                <AnchorPane layoutX="435.0" layoutY="345.0" minHeight="60.0" minWidth="256.0" prefHeight="60.0" prefWidth="256.0">
+                        <JFXTextField fx:id="loginField" layoutY="22.0" prefHeight="36.0" prefWidth="256.0" styleClass="text-field--magenta">
+                            <padding>
+                                <Insets left="8.0" />
+                            </padding>
+                        </JFXTextField>
+                        <Label styleClass="text-field--label" text="Login" />
+                </AnchorPane>
+                <AnchorPane layoutX="435.0" layoutY="413.0" minHeight="60.0" minWidth="256.0" prefHeight="60.0" prefWidth="256.0">
+                        <Label styleClass="password-field--label" text="Password" />
+                        <JFXPasswordField fx:id="passwordField" layoutY="22.0" prefHeight="36.0" prefWidth="256.0" styleClass="password-field--magenta">
+                            <padding>
+                                <Insets left="8.0" />
+                            </padding>
+                        </JFXPasswordField>
+                </AnchorPane>
+                <AnchorPane layoutX="460.0" layoutY="595.0" minHeight="36.0" minWidth="256.0" prefHeight="36.0" prefWidth="256.0" />
+                <JFXButton fx:id="signInButton" layoutX="435.0" layoutY="524.0" prefHeight="36.0" prefWidth="256.0" text="SIGN IN">
+                    <styleClass>
                         <String fx:value="button" />
-                     </styleClass>
-                  </JFXButton>
-               </children></AnchorPane>
-         </children>
-      </AnchorPane>
-   </children>
+                        <String fx:value="button__primary--blue" />
+                    </styleClass>
+                </JFXButton>
+                <JFXButton fx:id="createAccountButton" layoutX="435.0" layoutY="568.0" prefHeight="36.0" prefWidth="256.0" text="CREATE ACCOUNT">
+                    <styleClass>
+                        <String fx:value="button" />
+                        <String fx:value="button__primary--magenta" />
+                    </styleClass>
+                    <effect>
+                        <Glow />
+                    </effect>
+                </JFXButton>
+                <AnchorPane layoutX="435.0" layoutY="616.0" minHeight="36.0" minWidth="256.0" prefHeight="36.0" prefWidth="256.0">
+                        <JFXButton fx:id="forgotPasswordButton" text="FORGOT PASSWORD">
+                            <styleClass>
+                                <String fx:value="button__tertiary" />
+                                <String fx:value="button" />
+                            </styleClass>
+                        </JFXButton>
+                </AnchorPane>
+        </AnchorPane>
 </GridPane>

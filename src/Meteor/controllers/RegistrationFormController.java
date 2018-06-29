@@ -67,13 +67,13 @@ public class RegistrationFormController implements Initializable {
     private JFXRadioButton femaleRadioButton;
 
     @FXML
-    private ImageView loginImportantMarker;
+    private ImageView userNameImportantMarker;
 
     @FXML
-    private Label loginImportantMessage;
+    private Label userNameImportantMessage;
 
     @FXML
-    private Label loginImportantMessageDups;
+    private Label userNameImportantMessageDups;
 
     @FXML
     private ImageView passwordImportantMarker;
@@ -141,13 +141,13 @@ public class RegistrationFormController implements Initializable {
         });
     }
 
-    private void registerUser(Event event) {
+    public void registerUser(Event event) {
         HashMap<String, Object> passedParameters = new HashMap<>();
         passedParameters.put("event", event);
         registerUser(passedParameters);
     }
 
-    private void registerUser(HashMap<String, Object> reflectedArguments) {
+    public void registerUser(HashMap<String, Object> reflectedArguments) {
         backgroundRegistrationThread = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
@@ -157,14 +157,13 @@ public class RegistrationFormController implements Initializable {
                         Event event = (Event) reflectedArguments.get("event");
 
                         if (reflectedArguments.size() > 1) {
-                            System.out.println("debug 2");
                             if (reflectedArguments.containsKey("user") && reflectedArguments.containsKey("lost_connection_stage")) {
                                 User givenUser = (User) reflectedArguments.get("user");
                                 try {
                                     if (givenUser.validateUser(givenUser).isEmpty()) {
                                         DBHandler.addUser(givenUser);
                                         Platform.runLater(() -> {
-                                            Main.changeScene(thisScene, (Stage) reflectedArguments.get("lost_connection_stage"));
+                                            Main.changeScene(Main.postRegistrationScene, (Stage) reflectedArguments.get("lost_connection_stage"));
                                             ((Stage) reflectedArguments.get("lost_connection_stage")).requestFocus();
                                         });
                                     } else {
@@ -183,7 +182,7 @@ public class RegistrationFormController implements Initializable {
                             try {
                                 if (givenUser.validateUser(givenUser).isEmpty()) {
                                     DBHandler.addUser(givenUser);
-                                    for (Node givenNode : new ArrayList<>(asList(loginImportantMessage, loginImportantMessageDups, loginImportantMarker, passwordImportantMarker, passwordImportantMessage, emailImportantMarker, emailImportantMessage, fullNameImportantMarker, fullNameImportantMessage))) {
+                                    for (Node givenNode : new ArrayList<>(asList(userNameImportantMarker, userNameImportantMessage, userNameImportantMessageDups, passwordImportantMarker, passwordImportantMessage, emailImportantMarker, emailImportantMessage, fullNameImportantMarker, fullNameImportantMessage))) {
                                         givenNode.setVisible(false);
                                     }
                                     for (Control givenControl : new ArrayList<Control>(asList(loginField, emailField, fullNameField))) {
@@ -220,6 +219,14 @@ public class RegistrationFormController implements Initializable {
             backgroundRegistrationThread.start();
             executed = true;
         }
+
+        backgroundRegistrationThread.setOnSucceeded(event -> {
+            executed = false;
+        });
+
+        backgroundRegistrationThread.setOnFailed(event -> {
+            executed = false;
+        });
     }
 
     private void displayErrors(User givenUser) throws SQLException, ConnectException {
@@ -247,22 +254,22 @@ public class RegistrationFormController implements Initializable {
         });
 
         if (listOfErrors.contains("username")) {
-            loginImportantMessage.setVisible(true);
+            userNameImportantMessage.setVisible(true);
         } else {
-            loginImportantMessage.setVisible(false);
+            userNameImportantMessage.setVisible(false);
         }
 
         if (listOfErrors.contains("username_already_taken")) {
-            loginImportantMessageDups.setVisible(true);
+            userNameImportantMessageDups.setVisible(true);
         } else {
-            loginImportantMessageDups.setVisible(false);
+            userNameImportantMessageDups.setVisible(false);
         }
 
 
         if (listOfErrors.contains("username") || listOfErrors.contains("username_already_taken")) {
-            loginImportantMarker.setVisible(true);
+            userNameImportantMarker.setVisible(true);
         } else {
-            loginImportantMarker.setVisible(false);
+            userNameImportantMarker.setVisible(false);
         }
 
         if (listOfErrors.contains("password")) {
@@ -297,7 +304,6 @@ public class RegistrationFormController implements Initializable {
             fullNameImportantMarker.setVisible(false);
             fullNameImportantMessage.setVisible(false);
         }
-        System.out.println("debug7");
 
     }
 

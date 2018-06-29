@@ -6,41 +6,32 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="center" hgap="10" stylesheets="@../css/general.css" vgap="10" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Meteor.controllers.PostRegistrationScreenController">
-   <columnConstraints>
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-   </rowConstraints>
-   <children>
-      <AnchorPane id="postRegistrationScreenBackground" fx:id="postRegistrationScreenParent" prefHeight="750.0" prefWidth="1125.0" styleClass="default-background">
-         <children>
-            <ImageView fitHeight="113.0" fitWidth="561.0" layoutX="467.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../assets/logo.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="401.0" layoutY="375.0" text="Thanks for signing up!">
-               <styleClass>
-                  <String fx:value="title" />
-                  <String fx:value="title--white" />
-               </styleClass>
-            </Label>
-            <AnchorPane layoutX="434.0" layoutY="434.0" minHeight="36.0" minWidth="256.0" prefHeight="36.0" prefWidth="256.0">
-                  <JFXButton fx:id="continueButton" prefHeight="36.0" prefWidth="256.0" text="CONTINUE">
-                     <styleClass>
-                        <String fx:value="button" />
-                        <String fx:value="button__primary--magenta" />
-                        <String fx:value="no-focus" />
-                     </styleClass>
-                  </JFXButton>
-            </AnchorPane>
-         </children>
-      </AnchorPane>
-   </children>
+<GridPane alignment="center" hgap="10" stylesheets="@../css/general.css" vgap="10"
+          xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="Meteor.controllers.PostRegistrationScreenController">
+    <AnchorPane id="postRegistrationScreenBackground" fx:id="postRegistrationScreenParent" prefHeight="750.0"
+                prefWidth="1125.0" styleClass="default-background">
+        <ImageView fitHeight="113.0" fitWidth="561.0" layoutX="467.0" layoutY="6.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <Image url="@../assets/logo.png"/>
+        </ImageView>
+        <Label layoutX="401.0" layoutY="375.0" text="Thanks for signing up!">
+            <styleClass>
+                <String fx:value="title"/>
+                <String fx:value="title--white"/>
+            </styleClass>
+        </Label>
+        <AnchorPane layoutX="434.0" layoutY="434.0" minHeight="36.0" minWidth="256.0" prefHeight="36.0"
+                    prefWidth="256.0">
+            <JFXButton fx:id="continueButton" prefHeight="36.0" prefWidth="256.0" text="CONTINUE">
+                <styleClass>
+                    <String fx:value="button"/>
+                    <String fx:value="button__primary--magenta"/>
+                    <String fx:value="no-focus"/>
+                </styleClass>
+            </JFXButton>
+        </AnchorPane>
+    </AnchorPane>
 </GridPane>

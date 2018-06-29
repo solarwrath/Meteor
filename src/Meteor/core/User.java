@@ -1,5 +1,7 @@
 package Meteor.core;
 
+import Meteor.core.exceptions.NotCompletedUser;
+import Meteor.core.exceptions.NotFoundUserException;
 import com.mysql.cj.exceptions.ConnectionIsClosedException;
 
 import java.net.ConnectException;
@@ -148,7 +150,7 @@ public class User {
         return "Error";
     }
 
-    public ArrayList<String> validateUser(User givenUser) throws SQLException, ConnectionIsClosedException, ConnectException {
+    public static ArrayList<String> validateUser(User givenUser) throws SQLException, ConnectionIsClosedException, ConnectException {
         ArrayList<String> listOfErrors = new ArrayList<>();
         if (!isValidUsename(givenUser.getUsername())) {
             listOfErrors.add("username");
@@ -171,4 +173,30 @@ public class User {
         return listOfErrors;
     }
 
+    public static User returnLoginnedUser(String givenUsername, String givenPassword) throws SQLException, ConnectionIsClosedException, ConnectException, NotCompletedUser, NotFoundUserException {
+        ResultSet tempRS = DBHandler.returnFromSQLQuery("SELECT * FROM students WHERE (username='" + givenUsername + "' AND password='" + givenPassword + "')");
+        if (tempRS.next()) {
+            String usernameFromDB = tempRS.getString("username");
+            String passwordFromDB = tempRS.getString("password");
+            String emailFromDB = tempRS.getString("email");
+            String fullNameFromDB = tempRS.getString("full_name");
+            String genderFromDBString = tempRS.getString("gender");
+            if (!(usernameFromDB.equals("") || usernameFromDB == null ||
+                    passwordFromDB.equals("") || passwordFromDB == null ||
+                    emailFromDB.equals("") || emailFromDB == null ||
+                    fullNameFromDB.equals("") || fullNameFromDB == null ||
+                    genderFromDBString.equals("") || genderFromDBString == null)) {
+                Gender genderFromDBEnum = genderFromDBString == "Male" ? Gender.MALE : Gender.FEMALE;
+                return new User(usernameFromDB, passwordFromDB, emailFromDB, fullNameFromDB, genderFromDBEnum);
+            } else {
+                throw new NotCompletedUser("This user doesn't have all the required parameters.");
+            }
+        } else {
+            throw new NotFoundUserException("There is no such user in our database.");
+        }
+    }
+
+    public static boolean checkIfUserIsValid(User givenUser){
+        return givenUser.getUsername().trim().equals("") || givenUser.getUsername() == null || givenUser.getPassword().trim().equals("") || givenUser.getPassword() == null;
+    }
 }

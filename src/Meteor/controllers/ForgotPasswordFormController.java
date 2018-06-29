@@ -76,7 +76,7 @@ public class ForgotPasswordFormController {
                         }
                     }
                 } catch (NullPointerException e) {
-                    //System.out.println(e);
+                    //TODO logging there
                 }
             });
             sendForgotMessage(event);
@@ -88,14 +88,14 @@ public class ForgotPasswordFormController {
         });
     }
 
-    private void sendForgotMessage(Event event) {
+    public void sendForgotMessage(Event event) {
         HashMap<String, Object> passedParameters = new HashMap<>();
         passedParameters.put("event", event);
         sendForgotMessage(passedParameters);
     }
 
-    private void sendForgotMessage(HashMap<String, Object> reflectedArguments) {
-        Service<Void> backgroundRegistrationThread = new Service<>() {
+    public void sendForgotMessage(HashMap<String, Object> reflectedArguments) {
+        Service<Void> backgroundForgotPasswordThread = new Service<>() {
             @Override
             protected Task<Void> createTask() {
                 return new Task<>() {
@@ -125,7 +125,7 @@ public class ForgotPasswordFormController {
 
                                         } catch (SQLException e) {
                                             e.printStackTrace();
-                                            callLostConnectionScene(event, givenEmail);
+                                            //callLostConnectionScene(event, givenEmail);
                                         }
                                     } else {
                                         Platform.runLater(() -> {
@@ -185,9 +185,17 @@ public class ForgotPasswordFormController {
         };
 
         if(!executed){
-            backgroundRegistrationThread.start();
+            backgroundForgotPasswordThread.start();
             executed = true;
         }
+
+        backgroundForgotPasswordThread.setOnSucceeded(event -> {
+            executed = false;
+        });
+
+        backgroundForgotPasswordThread.setOnFailed(event -> {
+            executed = false;
+        });
 
     }
 

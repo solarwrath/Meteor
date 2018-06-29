@@ -2,6 +2,7 @@ package Meteor;
 
 import Meteor.core.LostConnectionScene;
 import Meteor.core.PropertiesConfig;
+import Meteor.core.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
@@ -22,17 +23,18 @@ public class Main extends Application {
     public static LostConnectionScene lostConnectionScene;
     public static Scene forgotPasswordScene;
     public static Scene postForgotPasswordScene;
+    public static Scene dashboardMainScene;
     public static PropertiesConfig propertiesConfig = ConfigFactory.create(PropertiesConfig.class);
+
+    public static User currentUser = new User();
 
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         //TODO Need to go deeper and read more about all this stuff
         //TODO Pbbly need to rewrite to wrap some functionality in the functions
-        //TODO Get rid of useless imports
-        //TODO More static main methods to attach listeners/bindings for example. BTW Listeners r need to be examined. They have rules and now I can't write them without IDEA
-        for(String nameOfFont : new ArrayList<>(Arrays.asList("SemiBold", "Bold", "Regular", "Light", "Medium"))){
-            Font.loadFont(Main.class.getResource("assets/fonts/Montserrat-"+nameOfFont+".otf").toExternalForm(), 12);
+        for (String nameOfFont : new ArrayList<>(Arrays.asList("SemiBold", "Bold", "Regular", "Light", "Medium"))) {
+            Font.loadFont(Main.class.getResource("assets/fonts/Montserrat-" + nameOfFont + ".otf").toExternalForm(), 12);
         }
         primaryStage.setTitle("Meteor");
         primaryStage.initStyle(StageStyle.UNDECORATED);
@@ -43,8 +45,9 @@ public class Main extends Application {
         lostConnectionScene = new LostConnectionScene(FXMLLoader.load(getClass().getResource("fxml/lostConnectionScreen.fxml")));
         forgotPasswordScene = new Scene(FXMLLoader.load(getClass().getResource("fxml/forgotPasswordScreen.fxml")));
         postForgotPasswordScene = new Scene(FXMLLoader.load(getClass().getResource("fxml/postForgotPasswordScreen.fxml")));
+        dashboardMainScene = new Scene(FXMLLoader.load(getClass().getResource("fxml/dashboardMainScreen.fxml")));
 
-        for (Scene currentScene: new ArrayList<>(Arrays.asList(loginScene, registrationScene, postRegistrationScene, lostConnectionScene, forgotPasswordScene, postForgotPasswordScene))) {
+        for (Scene currentScene : new ArrayList<>(Arrays.asList(loginScene, registrationScene, postRegistrationScene, lostConnectionScene, forgotPasswordScene, postForgotPasswordScene, dashboardMainScene))) {
             currentScene.getRoot().getAccessibleHelp();
             currentScene.getStylesheets().add(this.getClass().getResource("css/general.css").toExternalForm());
         }
@@ -53,11 +56,11 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void changeScene(Scene givenScene, Stage currentStage){
+    public static void changeScene(Scene givenScene, Stage currentStage) {
         currentStage.setScene(givenScene);
     }
 
-    public static void callLostConnectionScene(Stage givenStage, Method givenMethod, HashMap<String, Object> givenParameters, Class givenClass){
+    public static void callLostConnectionScene(Stage givenStage, Method givenMethod, HashMap<String, Object> givenParameters, Class givenClass) {
         lostConnectionScene.setPreviousScene(givenStage.getScene());
         lostConnectionScene.setPassedMethod(givenMethod);
         lostConnectionScene.setPassedParametrs(givenParameters);
