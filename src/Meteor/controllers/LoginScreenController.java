@@ -1,10 +1,10 @@
 package Meteor.controllers;
 
-import Meteor.Main;
+import Meteor.java.Meteor.Main;
 
-import Meteor.core.User;
-import Meteor.core.exceptions.NotCompletedUser;
-import Meteor.core.exceptions.NotFoundUserException;
+import Meteor.java.Meteor.core.User;
+import Meteor.java.Meteor.core.exceptions.NotCompletedUser;
+import Meteor.java.Meteor.core.exceptions.NotFoundUserException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;

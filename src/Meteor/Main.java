@@ -35,7 +35,7 @@ public class Main extends Application {
         for (String nameOfFont : new ArrayList<>(Arrays.asList("SemiBold", "Bold", "Regular", "Light", "Medium"))) {
             Font.loadFont(Main.class.getResource("assets/fonts/Montserrat-" + nameOfFont + ".otf").toExternalForm(), 12);
         }
-        primaryStage.setTitle("Meteor");
+        primaryStage.setTitle("Meteor.java.Meteor");
         primaryStage.initStyle(StageStyle.UNDECORATED);
 
         loginScene = new Scene(FXMLLoader.load(getClass().getResource("fxml/loginScreen.fxml")));

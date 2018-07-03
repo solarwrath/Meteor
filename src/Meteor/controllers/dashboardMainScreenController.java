@@ -1,25 +1,20 @@
 package Meteor.controllers;
 
-import Meteor.Main;
+import Meteor.java.Meteor.Main;
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.binding.Binding;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.fxmisc.easybind.EasyBind;
-
-import java.sql.SQLException;
 
 public class dashboardMainScreenController {
 

@@ -1,7 +1,7 @@
 package Meteor.controllers;
 
-import Meteor.Main;
 import Meteor.core.LostConnectionScene;
+import Meteor.java.Meteor.Main;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;

@@ -10,7 +10,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
 <GridPane alignment="center" hgap="10" stylesheets="@../css/general.css" vgap="10" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Meteor.controllers.LoginScreenController">
         <AnchorPane id="loginFormBackground" fx:id="loginScreenParent" prefHeight="750.0" prefWidth="1125.0" styleClass="default-background">
@@ -63,4 +65,10 @@
                         </JFXButton>
                 </AnchorPane>
         </AnchorPane>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
 </GridPane>

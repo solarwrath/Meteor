@@ -3,7 +3,7 @@ package Meteor.core;
 import org.aeonbits.owner.Config;
 @Config.LoadPolicy(Config.LoadType.FIRST)
 @Config.Sources({
-        "classpath:Meteor/assets/config.properties"
+        "classpath:Meteor.java.Meteor/assets/config.properties"
 })
 
 public interface PropertiesConfig extends Config {

@@ -1,8 +1,8 @@
 package Meteor.controllers;
 
-import Meteor.Main;
+import Meteor.java.Meteor.Main;
 import Meteor.core.DBHandler;
-import Meteor.core.User;
+import Meteor.java.Meteor.core.User;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;

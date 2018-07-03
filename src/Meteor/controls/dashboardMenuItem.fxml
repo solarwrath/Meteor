@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+
+<fx:root type="javafx.scene.layout.HBox" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141">
+    <HBox fx:id="dashboardMainMenuHome" prefHeight="40.0" prefWidth="256.0">
+      <!--<FontAwesomeIconView fx:id="menuItemIcon" fill="#f3f3f3" glyphName="HOME" size="16.0" styleClass="dashboard__menu__item__icon">
+         <HBox.margin>
+            <Insets left="36.0" top="15.0" />
+         </HBox.margin>
+      </FontAwesomeIconView>-->
+        <Label fx:id="menuItemLabel" styleClass="dashboard__menu__item__label" text="Home" textFill="#f3f3f3">
+            <HBox.margin>
+                <Insets left="36.0" top="15.0" />
+            </HBox.margin>
+        </Label>
+        <styleClass>
+            <String fx:value="dashboard__menu__item" />
+            <String fx:value="dashboard__menu__item--active" />
+        </styleClass>
+        <cursor>
+            <Cursor fx:constant="HAND" />
+        </cursor>
+    </HBox>
+</fx:root>

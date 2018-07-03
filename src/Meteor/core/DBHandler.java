@@ -1,6 +1,6 @@
 package Meteor.core;
 
-import Meteor.Main;
+import Meteor.java.Meteor.Main;
 
 import java.sql.*;
 

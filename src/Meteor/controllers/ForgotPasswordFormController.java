@@ -1,8 +1,8 @@
 package Meteor.controllers;
 
-import Meteor.Main;
-import Meteor.core.MailHandler;
-import Meteor.core.User;
+import Meteor.java.Meteor.Main;
+import Meteor.java.Meteor.core.MailHandler;
+import Meteor.java.Meteor.core.User;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
